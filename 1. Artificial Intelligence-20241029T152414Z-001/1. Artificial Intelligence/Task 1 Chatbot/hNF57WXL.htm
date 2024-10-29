@@ -1,0 +1,2110 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Pandorabots Documentation</title>
+    <link rel="stylesheet" href="/docs/assets/css/styles.css">
+    
+      <link rel="stylesheet" href="/docs/assets/tipuesearch/css/normalize.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <script src="/docs/assets/tipuesearch/tipuesearch_content.js"></script>
+      <link rel="stylesheet" href="/docs/assets/tipuesearch/css/tipuesearch.css">
+      <script src="/docs/assets/tipuesearch/tipuesearch_set.js"></script>
+      <script src="/docs/assets/tipuesearch/tipuesearch.min.js"></script>
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-49503515-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-49503515-7');
+    </script>
+  </head>
+  <body>
+    <div class="pb-docs">
+        <div class="pb-docs__content">
+
+  <h1>AIML Reference</h1>
+
+  <h3 id="aiml">&lt;aiml&gt;</h3>
+
+  <p>The <em>AIML root element</em> delimits a block of AIML code. All other elements must be descendents of the root element.</p>
+
+  <h4>Attributes</h4>
+
+  <p><code class="language-plaintext highlighter-rouge">version</code> (optional)
+Specifies the AIML version that the document is written in.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;aiml version="2.0"&gt;
+&lt;!-- AIML code goes here --&gt;
+&lt;/aiml&gt;
+</code></pre></div>  </div>
+
+  <h3 id="bot">&lt;bot /&gt;</h3>
+
+  <p>The <em>bot element</em> is used to recall custom bot properties defined in the <code class="language-plaintext highlighter-rouge">.properties</code> file. These variables are accessible to all users of the bot.</p>
+
+  <h4>Attributes</h4>
+
+  <p><code class="language-plaintext highlighter-rouge">name</code> (required)<br />
+Specifies the name of the property being recalled. If no property exists under the specified name, the bot element will return the value of the property named <code class="language-plaintext highlighter-rouge">default-property</code>.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- Used in a bot response (template tag) --&gt;
+&lt;category&gt;
+  &lt;pattern&gt;WHAT IS YOUR NAME&lt;/pattern&gt;
+  &lt;template&gt;My name is &lt;bot name="name" /&gt;&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;!-- Used to match a client's input (pattern tag) --&gt;
+&lt;category&gt;
+  &lt;pattern&gt;&lt;bot name="name"/&gt; IS THE BEST&lt;/pattern&gt;
+  &lt;template&gt;You are too kind.&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;!-- Used in a that tag for conversational context --&gt;
+&lt;category&gt;
+  &lt;pattern&gt;SAY YOUR NAME&lt;/pattern&gt;
+  &lt;template&gt;My name is &lt;bot name="name"/&gt;&lt;/template&gt;
+&lt;/category&gt;
+&lt;category&gt;
+  &lt;pattern&gt;COOL&lt;/pattern&gt;
+  &lt;that&gt;My name is &lt;bot name="name"/&gt;&lt;/that&gt;
+  &lt;template&gt;I think my name is cool too!&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;!-- Used to replace a very long complicated URL in a bot response --&gt;
+&lt;category&gt;
+   &lt;pattern&gt;SHOW ME A CAT&lt;/pattern&gt;
+   &lt;template&gt;&lt;image&gt;&lt;bot name="catimageurl"/&gt;&lt;/image&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <h3 id="button">&lt;button /&gt;</h3>
+
+  <p>The <em>button tag</em> is a rich media element used to offer users quick tap options during a conversation. They currently come in two varieties - <em>postback</em> buttons, which are used to send messages back to your bot, and <em>url</em> buttons, which function like links.</p>
+
+  <h4>Attributes</h4>
+
+  <p>Both types of button take a <em>text</em> attribute, and an additional <em>postback</em> or <em>url</em> can be included to define the button’s role. If the <em>button</em> tag is wrapped directly around text instead of attribute tags, the value will be applied as both the <em>text</em> and the <em>postback</em>.</p>
+
+  <p><code class="language-plaintext highlighter-rouge">text</code> (optional)<br />
+Specifies the visible text that appears on the button itself.</p>
+
+  <p><code class="language-plaintext highlighter-rouge">postback</code> (optional)<br />
+Specifies the message that the bot receives when the button is clicked. The user doesn’t see this part of the message, which allows you to trigger secret categories using postbacks.</p>
+
+  <p><code class="language-plaintext highlighter-rouge">url</code> (optional)<br />
+Specifies the url to take the user to when the button is clicked.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;button&gt;
+  &lt;text&gt;Tell Me More&lt;/text&gt;
+  &lt;postback&gt;xmoreabout foo&lt;/postback&gt;
+&lt;/button&gt;
+
+&lt;button&gt;
+  &lt;text&gt;Visit Us&lt;/text&gt;
+  &lt;url&gt;https://home.pandorabots.com&lt;/url&gt;
+&lt;/button&gt;
+</code></pre></div>  </div>
+
+  <h3 id="card">&lt;card&gt;</h3>
+
+  <p>A <em>card tag</em> wraps around several other tags - an <em>image</em> tag, some number of <em>button</em> tags, and a <em>title</em> and <em>subtitle</em>. The result is a menu containing all of these rich media elements!</p>
+
+  <h4>Attributes</h4>
+
+  <p><code class="language-plaintext highlighter-rouge">title</code> (required)<br />
+The bold text that appears at the top of your menu - describe what your user is seeing.</p>
+
+  <p><code class="language-plaintext highlighter-rouge">subtitle</code> (optional)<br />
+Lighter text used to provide more information to your users.</p>
+
+  <p><code class="language-plaintext highlighter-rouge">image</code> (required)<br />
+Provide the <em>url</em> where your menu image is hosted.</p>
+
+  <p><code class="language-plaintext highlighter-rouge">button</code> (required)<br />
+One or more <em>button</em> tags to offer your users response options.</p>
+
+  <h4>Usage</h4>
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;card&gt;
+    &lt;title&gt;Card Menu&lt;/title&gt;
+    &lt;subtitle&gt;Describe a card&lt;/subtitle&gt;
+    &lt;image&gt;https://url.for.image&lt;/image&gt;
+    &lt;button&gt;
+      &lt;text&gt;Learn More&lt;/text&gt;
+      &lt;postback&gt;xlearnmoreabout cards&lt;/postback&gt;
+    &lt;/button&gt;
+  &lt;/card&gt;
+</code></pre></div>  </div>
+
+  <h3 id="carousel">&lt;carousel&gt;</h3>
+
+  <p>A <em>carousel tag</em> wraps around some number of <em>card</em> elements to create a tap-through menu organized into different categories.</p>
+
+  <h4>Attributes</h4>
+  <p><code class="language-plaintext highlighter-rouge">card</code> (required)
+At least two cards - the carousel will display them one at a time, and allow your users to tap through them.</p>
+
+  <h4>Usage</h4>
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;carousel&gt;
+    &lt;card&gt;
+      &lt;title&gt;Robots&lt;/title&gt;
+      &lt;subtitle&gt;Made of metal&lt;/subtitle&gt;
+      &lt;image&gt;https://url.for.image&lt;/image&gt;
+      &lt;button&gt;Tell Me More&lt;/button&gt;
+    &lt;/card&gt;
+    &lt;card&gt;
+      &lt;title&gt;Humans&lt;/title&gt;
+      &lt;subtitle&gt;Made of carbon&lt;/subtitle&gt;
+      &lt;image&gt;https://url.for.image&lt;/image&gt;
+      &lt;button&gt;Tell Me More&lt;/button&gt;
+    &lt;/card&gt;
+  &lt;/carousel&gt;
+</code></pre></div>  </div>
+
+  <h3 id="category">&lt;category&gt;</h3>
+
+  <p>The <em>category element</em> delimits a base unit of knowledge in an AIML-based chatbot. In a very broad sense, a single category accepts an input, and returns an output.</p>
+
+  <p>All AIML elements (with the exception of the AIML root element and the topic element) must be contained within a category block.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;HI&lt;/pattern&gt;
+&lt;template&gt;Hello world!&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <h3 id="condition">&lt;condition&gt;</h3>
+
+  <p>The <em>condition element</em> is used to create an IF-THEN-ELSE type of control flow within a bot’s response. This is done by checking the value of a variable, and returning a response depending on that value.</p>
+
+  <h4>Attributes</h4>
+
+  <p>You can choose whether your condition rests on a predicate or local variable, depending on the attribute you provide:</p>
+
+  <p><code class="language-plaintext highlighter-rouge">name</code>  <br />
+Specifies the name of the predicate whose value will be checked. Note that this does not apply to the built-in predicates such as topic or that.</p>
+
+  <p><code class="language-plaintext highlighter-rouge">var</code>  <br />
+Specifies the name of the local variable whose value will be checked.</p>
+
+  <h4>Usage</h4>
+
+  <p>The condition element is used in conjunction with list elements written with <code class="language-plaintext highlighter-rouge">value</code> attributes. If the value of the predicate referenced in the condition element matches that of any list element’s value, that list element will be returned.</p>
+
+  <p>If the list element contains no value attribute, it will be returned in the case that no other list elements match the predicate’s value.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;DO YOU FIND ME ATTRACTIVE&lt;/pattern&gt;
+&lt;template&gt;
+  &lt;condition name="gender"&gt;
+    &lt;li value="male"&gt;I find you very handsome.&lt;/li&gt;
+    &lt;li value="female"&gt;I find you very pretty.&lt;/li&gt;
+    &lt;li&gt;I find you very attractive.&lt;/li&gt;
+  &lt;/condition&gt;
+&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>In this example, the bot will check the value of a predicate named <code class="language-plaintext highlighter-rouge">gender</code>. In the case that the predicate’s value is either <code class="language-plaintext highlighter-rouge">"male"</code> or <code class="language-plaintext highlighter-rouge">"female"</code>, one of the first two list elements will be returned. If neither of these conditions is met, then the third list element will be returned.</p>
+
+  <p>You can also use conditionals to check the status of a predicate, i.e. whether or not it has been set.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;WHAT IS MY NAME&lt;/pattern&gt;
+&lt;template&gt;
+&lt;condition name="firstname"&gt;
+  &lt;li value="unknown"&gt;You haven't told me your name.&lt;/li&gt;
+  &lt;li&gt;Your name is &lt;get name="firstname" /&gt;&lt;/li&gt;
+&lt;/condition&gt;
+&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>NOTE: if a predicate hasn’t been set with a value yet, the value will be “unknown” based on bot property <code class="language-plaintext highlighter-rouge">default-get</code>.</p>
+
+  <h3 id="date">&lt;date /&gt;</h3>
+
+  <p>Returns the date of the user’s locale.</p>
+
+  <h4>Attributes</h4>
+
+  <p><code class="language-plaintext highlighter-rouge">format</code> (optional)<br />
+Specifies the format of the returned date. This can be written like arguments to UNIX’s <code class="language-plaintext highlighter-rouge">strftime</code> function. More on this <a href="http://man7.org/linux/man-pages/man3/strftime.3.html">here</a>.</p>
+
+  <p><code class="language-plaintext highlighter-rouge">timezone</code> (optional)<br />
+This should be an integer number of hours +/- from GMT.</p>
+
+  <p><code class="language-plaintext highlighter-rouge">locale</code> (optional)<br />
+This is the iso language/country code pair e.g., en_US, ja_JP.  Locale  defaults to en_US. 
+The set of supported locales are:
+<code class="language-plaintext highlighter-rouge">af_ZA  ar_OM  da_DK  en_HK  es_CO  es_PY  fr_CA  is_IS  mt_MT  sh_YU  vi_VN
+ar_AE  ar_QA  de_AT  en_IE  es_CR  es_SV  fr_CH  it_CH  nb_NO  sk_SK  zh_CN
+ar_BH  ar_SA  de_BE  en_IN  es_DO  es_US  fr_FR  it_IT  nl_BE  sl_SI  zh_HK
+ar_DZ  ar_SD  de_CH  en_NZ  es_EC  es_UY  fr_LU  ja_JP  nl_NL  sq_AL  zh_SG
+ar_EG  ar_SY  de_DE  en_PH  es_ES  es_VE  ga_IE  kl_GL  nn_NO  sr_YU  zh_TW
+ar_IN  ar_TN  de_LU  en_SG  es_GT  et_EE  gl_ES  ko_KR  no_NO  sv_FI
+ar_IQ  ar_YE  el_GR  en_US  es_HN  eu_ES  gv_GB  kw_GB  pl_PL  sv_SE
+ar_JO  be_BY  en_AU  en_ZA  es_MX  fa_IN  he_IL  lt_LT  pt_BR  ta_IN
+ar_KW  bg_BG  en_BE  en_ZW  es_NI  fa_IR  hi_IN  lv_LV  pt_PT  te_IN
+ar_LB  bn_IN  en_BW  es_AR  es_PA  fi_FI  hr_HR  mk_MK  ro_RO  th_TH
+ar_LY  ca_ES  en_CA  es_BO  es_PE  fo_FO  hu_HU  mr_IN  ru_RU  tr_TR
+ar_MA  cs_CZ  en_GB  es_CL  es_PR  fr_BE  id_ID  ms_MY  ru_UA  uk_UA</code></p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;WHAT IS THE DATE&lt;/pattern&gt;
+&lt;template&gt;Today is &lt;date format="%B %d, %Y" /&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> What is the date?<br />
+<strong>Output:</strong> Today is January 21, 2020</p>
+  </blockquote>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;WHAT IS THE DATE IN FRENCH&lt;/pattern&gt;
+&lt;template&gt;Today is &lt;date locale="FR_fr" format="%A %B %d, %Y" /&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> What is the date in French?<br />
+<strong>Output:</strong> Today is mardi janvier 21, 2020</p>
+  </blockquote>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;WHAT IS THE TIME IN NEW YORK&lt;/pattern&gt;
+&lt;template&gt;It is &lt;date timezone="-5" format="%I:%M%p"/&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> What is the time in New York?<br />
+<strong>Output:</strong> It is 07:08AM</p>
+  </blockquote>
+
+  <h3 id="delay">&lt;delay&gt;</h3>
+
+  <p>A <em>delay tag</em> is useful for introducing a pause between different parts of a response for easier reading, or to simulate the time it would take a human to read and type a response. They’re easy to use - just wrap the tag around the number of seconds you want your bot response to wait.</p>
+
+  <h4>Usage</h4>
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;delay&gt;3&lt;/delay&gt;
+</code></pre></div>  </div>
+
+  <h3 id="denormalize">&lt;denormalize&gt;</h3>
+
+  <p>The <em>denormalize element</em> attempts to match its contents against the names of properties found in <code class="language-plaintext highlighter-rouge">denormal.substitution</code>. If a match is found, the denormalize element and its contents will be replaced by the property’s value.</p>
+
+  <p>The properties found in <code class="language-plaintext highlighter-rouge">denormal.substitution</code> are used to reverse transformations done by <code class="language-plaintext highlighter-rouge">normal.substitution</code>.</p>
+
+  <h4>Usage</h4>
+
+  <p>During input pre-processing, <code class="language-plaintext highlighter-rouge">normal.subsitution</code> removes punctuation. We can see this by echoing the part of the input that originally contained some puncutation:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;SAY *&lt;/pattern&gt;
+&lt;template&gt;&lt;star /&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> Say pandorabots.com<br />
+<strong>Output:</strong> pandorabots dot com</p>
+  </blockquote>
+
+  <p>This punctuation can be re-inserted by using the denormalize element:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;SAY *&lt;/pattern&gt;
+&lt;template&gt;&lt;denormalize&gt;&lt;star /&gt;&lt;/denormalize&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> Say pandorabots.com<br />
+<strong>Output:</strong> pandorabots.com</p>
+  </blockquote>
+
+  <h4 id="eval">&lt;eval&gt;</h4>
+
+  <p>The <em>eval element</em> is used to reference variables found in an outer category from within a nested category. This allows you to echo wildcard contents from an outer category from within a learn category.</p>
+
+  <p>Anything found within an eval element will be evaluated first, before the new category is created.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;THE * IS BLUE&lt;/pattern&gt;
+&lt;template&gt;
+  I will remember that the &lt;star /&gt; is blue.
+  &lt;learn&gt;
+    &lt;category&gt;
+    &lt;pattern&gt;WHAT COLOR IS THE &lt;eval&gt;&lt;star /&gt;&lt;/eval&gt;&lt;/pattern&gt;
+    &lt;template&gt;The &lt;eval&gt;&lt;star /&gt;&lt;/eval&gt; is blue&lt;/template&gt;
+    &lt;/category&gt;
+  &lt;/learn&gt;
+&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> The sky is blue.<br />
+<strong>Output:</strong> I will remember that the sky is blue.</p>
+  </blockquote>
+
+  <blockquote>
+    <p><strong>Input:</strong> What color is the sky?<br />
+<strong>Output:</strong> The sky is blue.</p>
+  </blockquote>
+
+  <h3 id="explode">&lt;explode&gt;</h3>
+
+  <p>The <em>explode element</em> is used to break a single word in to multiple words, by inserting spaces in between each character.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;EXPLODE *&lt;/pattern&gt;
+&lt;template&gt;&lt;explode&gt;&lt;star /&gt;&lt;/explode&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> Explode coffee<br />
+<strong>Output:</strong> c o f f e e</p>
+  </blockquote>
+
+  <h3 id="first">&lt;first&gt;</h3>
+
+  <p>The <em>first element</em> returns the first word found in its contents and applies to wildcards in patterns only.</p>
+
+  <p>This is an implementation of list processing in AIML.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;FIRST *&lt;/pattern&gt;
+&lt;template&gt;&lt;first&gt;&lt;star /&gt;&lt;/first&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> First a b c d<br />
+<strong>Output: a</strong></p>
+  </blockquote>
+
+  <h3 id="formal">&lt;formal&gt;</h3>
+
+  <p>The <em>formal element</em> returns its contents with each word capitalized.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;FORMAL *&lt;/pattern&gt;
+&lt;template&gt;&lt;formal&gt;&lt;star /&gt;&lt;/formal&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> Formal george washington<br />
+<strong>Output:</strong> George Washington</p>
+  </blockquote>
+
+  <h3 id="gender">&lt;gender&gt;</h3>
+
+  <p>The <em>gender element</em> attempts to match its contents against the names of properties found in <code class="language-plaintext highlighter-rouge">gender.substitution</code>. If a match is found, the gender element and its contents will be replaced by the property’s value.</p>
+
+  <p>The <code class="language-plaintext highlighter-rouge">gender.substitution</code> file contains properties whose names and values contain pronouns of opposite genders.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;  
+&lt;pattern&gt;DOES IT BELONG TO *&lt;/pattern&gt;  
+&lt;template&gt;No, it belongs to &lt;gender&gt;&lt;star/&gt;&lt;/gender&gt;&lt;/template&gt;  
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> Does it belong to her?<br />
+<strong>Output:</strong> No, it belongs to him</p>
+  </blockquote>
+
+  <h3 id="image">&lt;image&gt;</h3>
+
+  <p>The <em>image tag</em> allows your bot to send back image responses. It’s simple to use - just wrap the tag around the <em>url</em> of the image.</p>
+
+  <h4>Usage</h4>
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;image&gt;https://url.for.image&lt;/image&gt;
+</code></pre></div>  </div>
+
+  <h3 id="interval">&lt;interval&gt;</h3>
+
+  <p>The <em>interval element</em> is used in conjunction with the date element to calculate the difference between two different times/dates.</p>
+
+  <h4>Attributes</h4>
+
+  <p><code class="language-plaintext highlighter-rouge">format</code><br />
+Specifies the format of the returned date. This can be written like arguments to UNIX’s <code class="language-plaintext highlighter-rouge">strftime</code> function. More on this <a href="http://man7.org/linux/man-pages/man3/strftime.3.html">here</a>.
+Please note that the format attribute is now depreciated but is still included for backwards compatibility. It is no longer necessary to explicitly declare the format of your date, as the interval tag will parse any date with the following specifications:</p>
+
+  <p><a href="http://www.ietf.org/rfc/rfc2822.txt">rfc2822</a>: sample string is “Wed, 02 Jan 2013 15:16:17 -0800”, see .</p>
+
+  <p><a href="http://www.w3.org/TR/NOTE-datetime">w3cdtf</a>: sample string is “2013-01-02T15:16:17-08:00”. This format accepts dates prior to midnight, January 1, 1900 U (universal time 0) and even negative years (years BCE).</p>
+
+  <p><a href="https://en.wikipedia.org/wiki/ISO_8601">iso8601</a>: sample string is “2013-01-02T15:16:17-08:00”</p>
+
+  <p><a href="http://www.cplusplus.com/reference/ctime/asctime/">asctime</a>: sample string is “Wed Jan 2 15:16:17 2013”</p>
+
+  <p><a href="http://msdn.microsoft.com/en-us/library/ms187819.aspx">mssql</a>: sample string is “2013-01-02 15:16:17”</p>
+
+  <p>Please also note that the rfc2822 and asctime formats can only support English weekday and month names/abbreviations. Any non English dates will need to be translated before using the &lt;interval&gt; tag.</p>
+
+  <h4>Child tags</h4>
+
+  <p><code class="language-plaintext highlighter-rouge">&lt;from&gt;</code><br />
+Specifies the date from which the interval should begin.</p>
+
+  <p><code class="language-plaintext highlighter-rouge">&lt;to&gt;</code><br />
+Specifies the date at which the interval should end.</p>
+
+  <p><code class="language-plaintext highlighter-rouge">&lt;style&gt;</code><br />
+Specifies the style in which the interval should be returned. Can contain <code class="language-plaintext highlighter-rouge">years</code>, <code class="language-plaintext highlighter-rouge">months</code>, <code class="language-plaintext highlighter-rouge">days</code>, <code class="language-plaintext highlighter-rouge">hours</code>, <code class="language-plaintext highlighter-rouge">minutes</code> or <code class="language-plaintext highlighter-rouge">seconds</code>.</p>
+
+  <h4>Usage</h4>
+
+  <p>To calculate the difference between the current date and the bot’s birthdate, make sure to include a birthdate property in the <code class="language-plaintext highlighter-rouge">.properties</code> file, in a format that the interval tag can parse eg [“birthdate”, “January 2 1970”].</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;AGE IN YEARS&lt;/pattern&gt;
+&lt;template&gt;
+  &lt;interval&gt;
+    &lt;style&gt;years&lt;/style&gt;
+    &lt;from&gt;&lt;bot name="birthdate"/&gt;&lt;/from&gt;
+    &lt;to&gt;&lt;date/&gt;&lt;/to&gt;
+  &lt;/interval&gt;
+&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>The style element specifies that the interval should be returned in years.</p>
+
+  <p>It is important to bear in mind that if the date tag is used without formatting, this will be the date from midnight, eg: 29th February 2020 00:00 rather than 29th February 2020 18:47:23 which will be important if dealing with hours, minutes and seconds. Note also the %z parameter. This is used to specify the timezone difference from UTC either +hhmm or -hhmm, which should be used in the date part of the interval tag to customise it for your timezone. Do not use %Z (uppercase) in the date format. For the “to” and “from” attributes of the interval tag, Pandorabots only supports the 5 date standards as listed above, none of which use the timezone name (%Z), just the time offset (%z).</p>
+
+  <p>Here is an example where we use formatting in the date tag to calculate the number of hours since midnight.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;HOW MANY HOURS SINCE MIDNIGHT&lt;/pattern&gt;
+&lt;template&gt;
+  &lt;interval&gt;
+    &lt;style&gt;hours&lt;/style&gt;
+    &lt;from&gt;&lt;date/&gt;&lt;/from&gt;
+    &lt;to&gt;&lt;date format="%Y-%m-%dT%T%z"/&gt;&lt;/to&gt;
+  &lt;/interval&gt; hours.
+&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <h3 id="learn">&lt;learn&gt;</h3>
+
+  <p>The <em>learn element</em> allows the user to generate new category blocks from within a conversation. This powerful introduced in AIML 2.0 allows users to actually teach the bot new information.</p>
+
+  <p>Categories generated by the learn element are stored in memory, and are only accessible with the <code class="language-plaintext highlighter-rouge">client_name</code> that was used to create them.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;I LIKE COFFEE&lt;/pattern&gt;
+&lt;template&gt;
+  I will remember that you like coffee.
+  &lt;learn&gt;
+    &lt;category&gt;
+    &lt;pattern&gt;WHAT DO I LIKE&lt;/pattern&gt;
+    &lt;template&gt;You like coffee.&lt;/template&gt;
+    &lt;/category&gt;
+  &lt;/learn&gt;
+&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> I like coffee.<br />
+<strong>Output:</strong> I will remember that you like coffee.<br />
+<strong>Input:</strong> What do I like?<br />
+<strong>Output:</strong> You like coffee</p>
+  </blockquote>
+
+  <h3 id="li">&lt;li&gt;</h3>
+
+  <p>The <em>list item element</em> can be a child of both <code class="language-plaintext highlighter-rouge">&lt;condition&gt;</code> and <code class="language-plaintext highlighter-rouge">&lt;random&gt;</code>. It allows you to attach mulitple responses, each of which is chosen under certain circumstances.</p>
+
+  <h4>Attributes</h4>
+
+  <p><code class="language-plaintext highlighter-rouge">value</code> (optional)<br />
+You may specify a value when the list item element is the child of a condition element. The list item element will be returned if the value matches that of the predicate referenced in the condition element.</p>
+
+  <h4>Usage</h4>
+
+  <p>Using <code class="language-plaintext highlighter-rouge">&lt;li&gt;</code> inside of a <code class="language-plaintext highlighter-rouge">&lt;random&gt;</code> element:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+  &lt;pattern&gt;HI&lt;/pattern&gt;
+  &lt;template&gt;
+    &lt;random&gt;
+      &lt;li&gt;Hello!&lt;/li&gt;
+      &lt;li&gt;Hola!&lt;/li&gt;
+      &lt;li&gt;Hallo!&lt;/li&gt;
+    &lt;/random&gt;
+  &lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>Using <code class="language-plaintext highlighter-rouge">&lt;li&gt;</code> inside of a <code class="language-plaintext highlighter-rouge">&lt;condition&gt;</code> element:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+  &lt;pattern&gt;WHO AM I&lt;/pattern&gt;      
+  &lt;template&gt;
+    &lt;condition name="name"&gt;
+      &lt;li value="unknown"&gt;I don't know your name.&lt;/li&gt;
+      &lt;li&gt;Your name is &lt;get name="name"/&gt;&lt;/li&gt;
+    &lt;/condition&gt;
+  &lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <h5>Attributes vs. Tags</h5>
+
+  <p>In AIML 2.0, any value given by an XML attribute may also be expressed using a subtag of the same name. For example:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;li value="x"&gt;   --&gt;    &lt;li&gt;&lt;value&gt;X&lt;/value&gt;
+</code></pre></div>  </div>
+
+  <p>This makes it possible to vary the values of attributes using XML expressions, for example:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;IS * EQUAL TO *&lt;/pattern&gt;
+&lt;template&gt;
+  &lt;think&gt;&lt;set var="star"&gt;&lt;star/&gt;&lt;/set&gt;&lt;/think&gt;
+  &lt;condition var="star"&gt;
+    &lt;li&gt;&lt;value&gt;&lt;star index="2"/&gt;&lt;/value&gt;Yes.&lt;/li&gt;
+    &lt;li&gt;No.&lt;/li&gt;
+  &lt;/condition&gt;
+&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <h3 id="link">&lt;link&gt;</h3>
+
+  <p>The <em>link element</em> is a rich media element used to display a hyperlink. This is supported in the Pandorabots Chat Widget, and some of the 3rd party channel deployments.</p>
+
+  <h4>Attributes</h4>
+
+  <p>The link tag requires a <em>text</em> attribute and an additional <em>url</em> to define the hyperlink.</p>
+
+  <p><code class="language-plaintext highlighter-rouge">text</code><br />
+Specifies the visible text that appears to the user.</p>
+
+  <p><code class="language-plaintext highlighter-rouge">url</code><br />
+Specifieds the url to take the user to when the text is clicked.</p>
+
+  <h4>Usage</h4>
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;TEST LINK&lt;/pattern&gt;
+&lt;template&gt; 
+    &lt;link&gt;
+        &lt;text&gt;Pandorabots&lt;/text&gt;
+        &lt;url&gt;https://www.pandorabots.com/&lt;/url&gt;
+    &lt;/link&gt;
+&lt;/template&gt;
+&lt;/category&gt;  
+</code></pre></div>  </div>
+
+  <p><img src="/docs/assets/img/AIML_linkelement.png" alt="" /></p>
+
+  <h3 id="loop">&lt;loop /&gt;</h3>
+
+  <p>The <em>loop element</em> is used to iterate over a set of list item elements that are contained in a condition block.</p>
+
+  <h4>Usage</h4>
+
+  <p>To use the loop element, you must have a list item element with a value, and a second one that has no specified value. The loop element will be a child of the second list item, signifying that each time the second item is returned by the condition block, a loop occurs.</p>
+
+  <p>This means that you can modify a variable (like a predicate) when the second condition is met. If the value of the new predicate matches that of the first list item, then the loop will break.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;COUNT TO &lt;set&gt;number&lt;/set&gt;&lt;/pattern&gt;
+&lt;template&gt;
+  &lt;think&gt;&lt;set name="count"&gt;0&lt;/set&gt;&lt;/think&gt;
+  &lt;condition name="count"&gt;
+    &lt;li&gt;&lt;value&gt;&lt;star/&gt;&lt;/value&gt;&lt;/li&gt;
+    &lt;li&gt;
+      &lt;set name="count"&gt;
+        &lt;map&gt;&lt;name&gt;successor&lt;/name&gt;&lt;get name="count"/&gt;&lt;/map&gt;
+      &lt;/set&gt;
+      &lt;loop/&gt;
+    &lt;/li&gt;
+  &lt;/condition&gt;
+&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> Count to 6<br />
+<strong>Output:</strong> 1 2 3 4 5 6</p>
+  </blockquote>
+
+  <p>This example takes advantage of the built in set <code class="language-plaintext highlighter-rouge">number</code>, which verifies am input word as a number, and the built in map <code class="language-plaintext highlighter-rouge">successor</code>, which maps integers to their successive integers.</p>
+
+  <p>Before the condition block, the <code class="language-plaintext highlighter-rouge">count</code> predicate is initialized with the value <code class="language-plaintext highlighter-rouge">0</code>. If the user input was <code class="language-plaintext highlighter-rouge">Count to 0</code>, then the first list item will be returned (echoing the number found in the input).</p>
+
+  <p>Otherwise, the second item will be returned, and the <code class="language-plaintext highlighter-rouge">count</code> predicate is reset as the successive integer to the one found in the input. The loop element will run the condition again, and will continue to return the second list item until the predicate count matches the value of <code class="language-plaintext highlighter-rouge">&lt;star /&gt;</code>.</p>
+
+  <h3 id="lowercase">&lt;lowercase&gt;</h3>
+
+  <p>The <em>lowercase element</em> transforms all letters in its contents to lowercase.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+  &lt;pattern&gt;A B C&lt;/pattern&gt;
+  &lt;template&gt;&lt;lowercase&gt;&lt;input/&gt;&lt;/lowercase&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> A B C<br />
+<strong>Output:</strong> a b c</p>
+  </blockquote>
+
+  <h3 id="map">&lt;map&gt;</h3>
+
+  <p>The <em>map element</em> is used to reference a <code class="language-plaintext highlighter-rouge">.map</code> file, which attempts to match the map element’s contents to one of its own properties, returning the property’s value. Maps are data structures that provide key-value pairs.</p>
+
+  <h4>Built-in Maps</h4>
+
+  <p>Pandorabots have some built-in maps that are not visible in the list of bot files:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;map name="successor"&gt;     -- maps any number n to n+1
+&lt;map name="predecessor"&gt;   -- maps any number to n-1
+&lt;map name="plural"&gt;        -- (attempts to) find the plural form of a singular noun (English only).
+&lt;map name="singular"&gt;      -- (attempts to) find the singular forms of a plural noun (English only).
+</code></pre></div>  </div>
+
+  <h4>Attributes</h4>
+
+  <p><code class="language-plaintext highlighter-rouge">name</code> (required)<br />
+Specifies the name of the <code class="language-plaintext highlighter-rouge">.map</code> file to match contents against.</p>
+
+  <h4>Usage</h4>
+
+  <p>This example uses <a href="https://github.com/pandorabots/rosie/blob/master/lib/maps/state2capital.map">state2capital.map</a> and <a href="https://github.com/pandorabots/rosie/blob/master/lib/sets/state.set">state.set</a>, both from the Rosie chatbot repository.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;WHAT IS THE CAPITAL OF &lt;set&gt;state&lt;/set&gt;&lt;/pattern&gt;
+&lt;template&gt;
+  &lt;map name="state2capital"&gt;&lt;star /&gt;&lt;/map&gt; is the capital of &lt;star /&gt;
+&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> What is the capital of California?<br />
+<strong>Output:</strong> Sacramento is the capital of California</p>
+  </blockquote>
+
+  <p>This category shows how maps and sets can be used in conjunction with each other to create “facts” in your bot’s knowledge base. The <code class="language-plaintext highlighter-rouge">state.set</code> file is called in the pattern to verify that the user’s input actually contained a state. If the wildcard contents does exist in the set file, it is then passed in as an input to <code class="language-plaintext highlighter-rouge">state2capital.map</code>. If it matches any of the keys in the map file, then the map element will return as associated value.</p>
+
+  <p>Like sets, we can include a “default” category when the wildcard contents does not match an item in the map.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;WHAT IS THE CAPITAL OF *&lt;/pattern&gt;
+&lt;template&gt;I don't know the capital of &lt;star/&gt;.&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input</strong>: What is the capital of Pennsyltucky?<br />
+<strong>Output</strong>: I don’t know the capital of Pennsyltucky.</p>
+  </blockquote>
+
+  <p>Map files are simple string array, such as:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[[“Texas”, "Austin"],[“California”, "Sacramento"]]  
+</code></pre></div>  </div>
+
+  <h3 id="normalize">&lt;normalize&gt;</h3>
+
+  <p>The <em>normalize element</em> attempts to match the contents within the tags against the name of the properties found in ‘normal.substitution’.  If a match if found, the <em>normalize element</em> will replace the matching elements with the properties value.</p>
+
+  <p>The properties found in the ‘normal.substitution’ file are used to modify every input that the bot may receive.</p>
+
+  <h4>Usage</h4>
+
+  <p>For when one is working with non-normalized information like information found in the <em>input element</em> as an example.  We can see this by trying to return this tag with and without the <em>normalize element</em>:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;THIS IS JOHN S&lt;/pattern&gt;
+&lt;template&gt;&lt;input/&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> This is John’s.<br />
+<strong>Output:</strong> This is John’s.</p>
+  </blockquote>
+
+  <p>This output can be changed to be reflect a normalized input by using the normalize element.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;THIS IS JOHN S&lt;/pattern&gt;
+&lt;template&gt;&lt;normalize&gt;&lt;input/&gt;&lt;/normalize&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> This is John’s.<br />
+<strong>Output:</strong> This is John s</p>
+  </blockquote>
+
+  <p>This can be helpful in scenarios where one is trying to train a bot with the <em>learn element</em>.</p>
+
+  <h3 id="pattern">&lt;pattern&gt;</h3>
+
+  <p>The <em>pattern element</em> is the block within each category that defines a linguistic pattern against which the user’s input can be matched. The pattern may contain letters, numbers, spaces, and a number of other symbols including <em>wildcards</em>.</p>
+
+  <p>The bot will search through all of its categories to form a match with the user input.</p>
+
+  <h4>Capitalization</h4>
+  <p>AIML matching does not differentiate between capital and lowercase letters (i.e. if the client said either “hi” or “HI”, the bot would match this category. Using all caps in the pattern is used to make the code more readable.</p>
+
+  <h4>Normalization</h4>
+  <p>Keep in mind, that the pre-processor strips the input of all punctuation, and other normalization substitutions. Therefore, as in the usage examples, do not include any periods, question marks etc. in the pattern tag. Also, you should include the normalized input, for instance “WHAT IS” rather than “WHAT’S”.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;HI&lt;/pattern&gt;
+&lt;template&gt;Hello there.&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;category&gt;
+&lt;pattern&gt;WHAT IS YOUR NAME&lt;/pattern&gt;
+&lt;template&gt;My name is Rosie&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <h3 id="person">&lt;person&gt;</h3>
+
+  <p>The <em>person element</em> attempts to match its contents against the <code class="language-plaintext highlighter-rouge">person.substitutions</code> file, which transforms pronouns between first and second person. If the contents forms a match with the name of a property in that file, then the person element and its contents will be replaced by the property’s value.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;I AM *&lt;/pattern&gt;  
+&lt;template&gt;You are &lt;person&gt;&lt;star/&gt;&lt;/person&gt;&lt;/template&gt;  
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> I am waiting for you<br />
+<strong>Output:</strong> You are waiting for me</p>
+  </blockquote>
+
+  <p>In the above example, the phrase “waiting for you” is echoed in the template using <code class="language-plaintext highlighter-rouge">&lt;star /&gt;</code>. But because the tag descends from the person element, the pronoun “you” is transformed to “me”.### &lt;person2&gt;</p>
+
+  <h3 id="person2">&lt;person2&gt;</h3>
+
+  <p>The <em>person2 element</em> is identical to the person element, however, it is used to transform pronouns between first and third person.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;  
+&lt;pattern&gt;GIVE THE * TO *&lt;/pattern&gt;  
+&lt;template&gt;User has asked me to give the &lt;star/&gt; to &lt;person2&gt;&lt;star index="2"/&gt;&lt;/person2&gt;&lt;/template&gt;  
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> Give the password to me<br />
+<strong>Output:</strong> User has asked me to give the password to them</p>
+  </blockquote>
+
+  <h3 id="program">&lt;program&gt;</h3>
+
+  <p>The <em>program element</em> returns the name and version number of the AIML interpreter being used.</p>
+
+  <h4>Usage</h4>
+
+  <p>Using this element on the <a href="https://home.pandorabots.com" target="_blank">Pandorabots Platform</a>:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;PROGRAM&lt;/pattern&gt;
+&lt;template&gt;&lt;program /&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> Program<br />
+<strong>Output:</strong> Pandorabots AIML Interpreter 2.0</p>
+  </blockquote>
+
+  <h3 id="random">&lt;random&gt;</h3>
+
+  <p>The <em>random element</em> can be used in conjunction with list item elements to provide a set of potential bot responses, one of which will be returned at random in the case that the category is matched.</p>
+
+  <p>This is a very useful tag to use in default categories, or categories that you think will be matched very often, because it can provide your bot with a less repetitive personality.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;*&lt;/pattern&gt;
+&lt;template&gt;
+  &lt;random&gt;
+    &lt;li&gt;What was that?&lt;/li&gt;
+    &lt;li&gt;I don't understand.&lt;/li&gt;
+    &lt;li&gt;Can you say that in a different way?&lt;/li&gt;
+  &lt;/random&gt;
+&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>For the <a href="/docs/core-concepts/#wildcards">UDC</a>, each time this category is matched, the bot will pick one of the list elements (<code class="language-plaintext highlighter-rouge">&lt;li&gt;</code>) at random as its response.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;HI&lt;/pattern&gt;
+&lt;template&gt;
+  &lt;random&gt;
+    &lt;li&gt;Hello!&lt;/li&gt;
+    &lt;li&gt;Well hello there.&lt;/li&gt;
+    &lt;li&gt;Howdy.&lt;/li&gt;
+    &lt;li&gt;Good day.&lt;/li&gt;
+    &lt;li&gt;Hi, friend.&lt;/li&gt;
+  &lt;/random&gt;
+&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>If the user’s input is “HI”, then one of the list item elements will be returned to the user at random.</p>
+
+  <h3 id="reply">&lt;reply&gt;</h3>
+
+  <p>The <em>reply tag</em> is another rich media element with a <em>text</em> attribute and a <em>postback</em> attribute, similar to a postback button.</p>
+
+  <p>The difference is that replies look and feel more like suggested responses than buttons, and are useful for letting your users quickly tap their way through a conversation. Also unlike buttons that remain permanent in the messaging window, once a user has tapped one of the replies, replies are no longer visible on our chat widget (and also some third-party channels like Facebook Messenger, etc.).</p>
+
+  <h4>Attributes</h4>
+  <p>If the <em>reply</em> tag is wrapped around plain text, the text will be used as both the <em>text</em> and <em>postback</em> attributes.</p>
+
+  <p><code class="language-plaintext highlighter-rouge">text</code> (optional)
+The visible text that appears on the reply response.
+<code class="language-plaintext highlighter-rouge">postback</code> (optional)
+The message sent to your bot - the user doesn’t see this part of the message, allowing you to trigger secret categories within your bot.</p>
+
+  <h4>Usage</h4>
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;reply&gt;
+    &lt;text&gt;yes&lt;/text&gt;
+    &lt;postback&gt;xsayyesto foo&lt;/postback&gt;
+&lt;/reply&gt;
+</code></pre></div>  </div>
+
+  <h3 id="get">&lt;get /&gt;</h3>
+
+  <p>The <em>get element</em> is used to return the value stored in a variable.</p>
+
+  <h4>Attributes</h4>
+
+  <p>You can use the <code class="language-plaintext highlighter-rouge">&lt;get /&gt;</code> element to retrieve bot predicates and local variables.</p>
+
+  <p><code class="language-plaintext highlighter-rouge">name</code><br />
+Specifies the name of the predicate to recall. If the predicate does not yet have a value, then the get element will return the default value for that predicate as specified in the <code class="language-plaintext highlighter-rouge">.pdefaults</code> file. If no default is specified, then the get element will return the value of the property <code class="language-plaintext highlighter-rouge">default-get</code>.</p>
+
+  <p><code class="language-plaintext highlighter-rouge">var</code><br />
+Similar to the <code class="language-plaintext highlighter-rouge">name</code> attribute, but returns the value of a local variable.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;WHAT IS MY NAME&lt;/pattern&gt;
+&lt;template&gt;&lt;get name="name" /&gt;&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;category&gt;
+&lt;pattern&gt;MY NAME IS *&lt;/pattern&gt;
+&lt;template&gt;Nice to meet you, &lt;set name="name"&gt;&lt;star /&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> What is my name?<br />
+<strong>Output:</strong> unknown<br />
+<strong>Input:</strong> My name is Daniel.<br />
+<strong>Output:</strong> Nice to meet you, Daniel.<br />
+<strong>Input:</strong> What is my name?<br />
+<strong>Output:</strong> Daniel.</p>
+  </blockquote>
+
+  <p>As seen in the above example, the first category returns the <code class="language-plaintext highlighter-rouge">default-get</code> property value (“unknown”) in the case that no custom predicate <code class="language-plaintext highlighter-rouge">name</code> has been set. Once the second category has been engaged, the get element returns the custom value of the predicate.</p>
+
+  <p>To avoid returning the value of <code class="language-plaintext highlighter-rouge">default-get</code>, you can use a condition element to first check whether or not a predicate has been set. By using a wildcard as the list element’s <code class="language-plaintext highlighter-rouge">value</code> attribute, we can check for any value of the predicate other than an empty string.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;WHAT IS MY NAME&lt;/pattern&gt;
+&lt;template&gt;
+  &lt;condition name="name"&gt;
+    &lt;li value="*"&gt;&lt;get name="name" /&gt;&lt;/li&gt;
+    &lt;li&gt;You have not told me your name.&lt;/li&gt;
+  &lt;/condition&gt;
+&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <h3 id="id">&lt;id /&gt;</h3>
+
+  <p>The <em>id element</em> returns the current <code class="language-plaintext highlighter-rouge">botid</code>, along with the <code class="language-plaintext highlighter-rouge">client_name</code> of whoever has issued the input. <code class="language-plaintext highlighter-rouge">botid</code> is the same as <code class="language-plaintext highlighter-rouge">app_id/botname</code>.</p>
+
+  <h4>Usage</h4>
+
+  <p>Here is an example of using the <code class="language-plaintext highlighter-rouge">&lt;id/&gt;</code> tag on the Pandorabots Platform, inside of a bot with
+the app_id “Daniel” and botname “test”:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+  &lt;pattern&gt;TEST ID&lt;/pattern&gt;
+  &lt;template&gt;&lt;id/&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> TEST ID<br />
+<strong>Output:</strong> -playground-daniel/test/daniel</p>
+  </blockquote>
+
+  <h3 id="input">&lt;input /&gt;</h3>
+
+  <p>The <em>input element</em> returns the entire user’s input. This is distinct from the star element, which returns only contents captured by a wildcard in the matched pattern.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;Stop repeating me&lt;/pattern&gt;
+&lt;template&gt;&lt;input /&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> Stop repeating me<br />
+<strong>Output:</strong> Stop repeating me</p>
+  </blockquote>
+
+  <h3 id="li">&lt;li&gt;</h3>
+
+  <p>The <em>list item element</em> can be a child of both <code class="language-plaintext highlighter-rouge">&lt;condition&gt;</code> and <code class="language-plaintext highlighter-rouge">&lt;random&gt;</code>. It allows you to attach mulitple responses, each of which is chosen under certain circumstances.</p>
+
+  <h4>Attributes</h4>
+
+  <p><code class="language-plaintext highlighter-rouge">value</code> (optional)<br />
+You may specify a value when the list item element is the child of a condition element. The list item element will be returned if the value matches that of the predicate referenced in the condition element.</p>
+
+  <h4>Usage</h4>
+
+  <p>Using <code class="language-plaintext highlighter-rouge">&lt;li&gt;</code> inside of a <code class="language-plaintext highlighter-rouge">&lt;random&gt;</code> element:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+  &lt;pattern&gt;HI&lt;/pattern&gt;
+  &lt;template&gt;
+    &lt;random&gt;
+      &lt;li&gt;Hello!&lt;/li&gt;
+      &lt;li&gt;Hola!&lt;/li&gt;
+      &lt;li&gt;Hallo!&lt;/li&gt;
+    &lt;/random&gt;
+  &lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>Using <code class="language-plaintext highlighter-rouge">&lt;li&gt;</code> inside of a <code class="language-plaintext highlighter-rouge">&lt;condition&gt;</code> element:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+  &lt;pattern&gt;WHO AM I&lt;/pattern&gt;      
+  &lt;template&gt;
+    &lt;condition name="name"&gt;
+      &lt;li value="unknown"&gt;I don't know your name.&lt;/li&gt;
+      &lt;li&gt;Your name is &lt;get name="name"/&gt;&lt;/li&gt;
+    &lt;/condition&gt;
+  &lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <h3 id="response">&lt;response /&gt;</h3>
+
+  <p>The <em>response element</em> returns the bot’s response specified by its historical index value.</p>
+
+  <h4>Attributes</h4>
+
+  <p><code class="language-plaintext highlighter-rouge">index</code>
+Specifies the historical index of the bot response to recall. <code class="language-plaintext highlighter-rouge">index="0"</code> refers to the current response.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;WHAT DID YOU JUST SAY&lt;/pattern&gt;
+&lt;template&gt;&lt;response index="1" /&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> Hi<br />
+<strong>Output:</strong> Hi there!<br />
+<strong>Input:</strong> What did you just say?<br />
+<strong>Output:</strong> Hi there!</p>
+  </blockquote>
+
+  <h3 id="rest">&lt;rest&gt;</h3>
+
+  <p>The <em>rest element</em> is a list processing tag that returns the contents of the element while omitting the first word. This only applies to a wildcard in the pattern.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;REST *&lt;/pattern&gt;
+&lt;template&gt;&lt;rest&gt;&lt;star /&gt;&lt;/rest&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> Rest A B C D<br />
+<strong>Output:</strong> B C D</p>
+  </blockquote>
+
+  <h3 id="sentence">&lt;sentence&gt;</h3>
+
+  <p>The <em>sentence element</em> capitalizes the first word of its contents, as if the contents were the beginning of a sentence.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+  &lt;pattern&gt;A B C&lt;/pattern&gt;
+  &lt;template&gt;&lt;sentence&gt;&lt;input/&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> a b c<br />
+<strong>Output:</strong> A b c</p>
+  </blockquote>
+
+  <h3 id="set">&lt;set&gt;</h3>
+
+  <p>The <em>set element</em> is used differently depending upon if it is in the pattern or the template.</p>
+
+  <h3>SET USED IN PATTERN</h3>
+
+  <p>In a category’s pattern, the <em>set element</em> is used to access values in a bot’s set file, which is a list of unique text strings. For example, a set file called “colors” might include a list such as:<br />
+red<br />
+orange<br />
+yellow<br />
+green<br />
+blue<br />
+indigo<br />
+…</p>
+
+  <p>We can use sets to dramatically reduce our overall number of categories. Consider the following conversation:<br />
+<strong>Human:</strong> Is green a color?<br />
+<strong>Bot:</strong> Yes, green is a color.<br />
+<strong>Human:</strong> Is blue a color?<br />
+<strong>Bot:</strong> Yes, blue is a color.<br />
+<strong>Human:</strong> is peanut butter a color?<br />
+<strong>Bot:</strong> No, peanut butter is not a color.<br />
+Imagine how many categories would be needed to cover every color in the spectrum!</p>
+
+  <p>Instead of giving each color its own category, we can create a set that contains all the colors, and write a single category that checks to see if the user’s input contained one of those colors. This category will only be matched IF the user’s input does, in fact, contain one of the colors in the set. Otherwise, the category will not be matched. The set functions like a wildcard. It captures one or more words found in the user’s input.</p>
+
+  <h4>Built-in Sets</h4>
+
+  <p>Pandorabots have some build-in sets that are not visible in the list of bot files.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;set&gt;number&lt;/set&gt;     -- matches any natural number
+</code></pre></div>  </div>
+
+  <h4>Usage</h4>
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;IS &lt;set&gt;colors&lt;/set&gt; A COLOR&lt;/pattern&gt;
+&lt;template&gt;Yes, &lt;star /&gt; is a color.&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;category&gt;
+&lt;pattern&gt;IS * A COLOR&lt;/pattern&gt;
+&lt;template&gt;No, &lt;star /&gt; is not a color.&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>If the input contained a string not found in the set, then that pattern would not have formed a match. Because of this, we can provide a default answer using a * wildcard. The second category above matches if the input contains a string not found in the set.</p>
+
+  <p><strong>NOTE:</strong> Sets take precedence over * and ^ wildcards, but can be overridden by _ # and an exact word match. The input captured by the <code class="language-plaintext highlighter-rouge">&lt;set&gt;</code> tags can be echoed using <code class="language-plaintext highlighter-rouge">&lt;star/&gt;</code>, just like a wildcard as shown in the usage example.  Set files are simple string array, such as:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[["red"],["orange"],["yellow"],["green"],["blue"],["indigo"]]
+</code></pre></div>  </div>
+
+  <p>Note that currently on the Pandorabots platform, set files cannot be dynamically updated using AIML. You will have to build this feature in your application using our bot development APIs (i.e. retrieve file, upload file, compile bot).</p>
+
+  <hr />
+
+  <h3>SET USED IN TEMPLATE</h3>
+
+  <p>In a category’s template, the <em>set element</em> is used to set a predicate variable. Predicates are not hardcoded like properties, and can be initialized during a conversation. This means that input from the user can be echoed in the value of a predicate.</p>
+
+  <h4>Attributes</h4>
+
+  <p><code class="language-plaintext highlighter-rouge">name</code> (required)
+The name attribute specifies a name for the predicate you will set. The predicate can then be recalled under the same name using the get element. If you are setting a local variable rather than a predicate, use the <code class="language-plaintext highlighter-rouge">var</code> attribute instead.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;MY NAME IS *&lt;/pattern&gt;
+&lt;template&gt;
+  Nice to meet you, &lt;set name="username"&gt;&lt;star /&gt;.&lt;/set&gt;
+&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;category&gt;
+&lt;pattern&gt;WHAT IS MY NAME&lt;/pattern&gt;
+&lt;template&gt;Your name is &lt;get name="username" /&gt;.&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p><strong>Input:</strong> My name is Daniel.<br />
+<strong>Output:</strong> Nice to meet you, Daniel.<br />
+<strong>Input:</strong> What is my name?<br />
+<strong>Output:</strong> Your name is Daniel.</p>
+
+  <p>Note that there is no way to remove a predicate once it has been set to a value. You can overwrite it to a blank value such as:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;set name="username"&gt;&lt;/set&gt;
+</code></pre></div>  </div>
+
+  <h3 id="size">&lt;size /&gt;</h3>
+
+  <p>The <em>size element</em> returns the number of category blocks contained in the current bot.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+  &lt;pattern&gt;TEST SIZE&lt;/pattern&gt;
+  &lt;template&gt;&lt;size/&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>If your bot has 1000 categories:</p>
+
+  <blockquote>
+    <p><strong>Input:</strong> test size<br />
+<strong>Output:</strong> 1000</p>
+  </blockquote>
+
+  <h3 id="split">&lt;split /&gt;</h3>
+
+  <p>A <em>split tag</em> does just what it says - splits a bot response into multiple parts. The split message will be displayed to your user as separate messages, which can be combined with a <em>delay</em> tag to space out long responses.</p>
+
+  <h4>Usage</h4>
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  Some text
+  &lt;split/&gt;
+  More text
+</code></pre></div>  </div>
+
+  <h3 id="sr">&lt;sr /&gt;</h3>
+
+  <p>The <em>sr element</em> is shorthand for <code class="language-plaintext highlighter-rouge">&lt;srai&gt;&lt;star /&gt;&lt;/srai&gt;</code>. Because this is one of the most often-used combinations of elements, AIML allows you to write as a shortened version.</p>
+
+  <h4>Usage</h4>
+
+  <p>Use anywhere you’d like to reduce an input with a single wildcard to the wildcard contents. For example, the two following patterns are the same, in practice:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+  &lt;pattern&gt;FAVORITE *&lt;/pattern&gt;
+  &lt;template&gt;&lt;srai&gt;&lt;star/&gt;&lt;/srai&gt;&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;category&gt;
+  &lt;pattern&gt;FAVORITE *&lt;/pattern&gt;
+  &lt;template&gt;&lt;sr/&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <h3 id="srai">&lt;srai&gt;</h3>
+
+  <p>The <em>srai element</em> allows your bot to recursively call categories after transforming the user’s input. So you can define a template that calls another category. The acronym “srai” has no official meaning, but is sometimes defined as <em>symbolic reduction</em> or <em>symbolic recursion</em>.</p>
+
+  <p>This has a wide range of uses:</p>
+  <ul>
+    <li>Simplifying an input using fewer words</li>
+    <li>Remove unnecessary words from the input (reduction)</li>
+    <li>Linking many synonymous inputs to the same template</li>
+    <li>Correcting spelling errors on the part of the client</li>
+    <li>Replacing colloquial expressions with ordinary English</li>
+  </ul>
+
+  <h4>Usage</h4>
+
+  <h5>Reductions</h5>
+
+  <p>The most typical use case of the srai element is to “reduce” an input by removing unecessary words, or by translating the input in to a shorter, more concise version.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;HELLO GOOD DAY&lt;/pattern&gt;
+&lt;template&gt;&lt;srai&gt;HI&lt;/srai&gt;&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;category&gt;
+&lt;pattern&gt;BONJOUR&lt;/pattern&gt;
+&lt;template&gt;&lt;srai&gt;HI&lt;/srai&gt;&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;category&gt;
+&lt;pattern&gt;GUTEN TAG&lt;/pattern&gt;
+&lt;template&gt;&lt;srai&gt;HI&lt;/srai&gt;&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;category&gt;
+&lt;pattern&gt;HI&lt;/pattern&gt;
+&lt;template&gt;Hello there!&lt;/template&gt;
+&lt;/category&gt;             
+</code></pre></div>  </div>
+
+  <p>In the case that the user’s input is “Hello good day,” “Bonjour,” or “Guten Tag,” the first three categories will recurse, and give the bot a new input “HI”. This will then match the fourth category, returning its response to the user.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;I SEE NOW THAT YOU ARE *&lt;/pattern&gt;
+&lt;template&gt;&lt;srai&gt;YOU ARE &lt;star/&gt;&lt;/srai&gt;&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;category&gt;
+&lt;pattern&gt;YOU ARE A ROBOT&lt;/pattern&gt;
+&lt;template&gt;Yes I am!&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>Removing unnecessary words from the input is another way to develop reductions. Reductions make writing AIML and adding to your bot a much more enjoyable process! The more reductions you have, the better your bot will be at providing relevants responses.</p>
+
+  <h5>Synonyms</h5>
+
+  <p>Synonyms can be addressed using <code class="language-plaintext highlighter-rouge">&lt;srai&gt;</code>.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt; _ DAD *&lt;/pattern&gt;
+&lt;template&gt;&lt;srai&gt;&lt;star/&gt; FATHER &lt;star index="2"/&gt;&lt;/srai&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>Anytime the user input contains the word “dad”, the bot will replace it with “father” and recurse using the new input. The benefit to this technique is to reduce categories. For instance, Thesaurus.com lists 52 synonyms for the word “good”. To account for this, you would need 52 additional categories for every one that contains the word “good”. If your bot has 100 patterns that contain the word “good”, that is 5200 additional categories you would have to write. Using the synonyms technique, you can reduce the number to just 52. You can reduce that down to just 1 by using a <a href="set.md">set</a> of synonyms!</p>
+
+  <p>NOTE: once a word has been defined as a synonym, you cannot use it in patterns. The leading underscore ensures that the bot translates the synonym before doing anything else.</p>
+
+  <h5>Corrections, Colloquialisms</h5>
+
+  <p>People are bad at spelling and typing, which may cause your bot to fail when trying to find a match. You can use <code class="language-plaintext highlighter-rouge">&lt;srai&gt;</code> to account for common spelling mistakes, or colloquialisms, such as the following:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;HOW DO I SING UP&lt;/pattern&gt;
+&lt;template&gt;&lt;srai&gt;HOW DO I SIGN UP&lt;/srai&gt;&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;category&gt;
+&lt;pattern&gt;HOW R U&lt;/pattern&gt;
+&lt;template&gt;&lt;srai&gt;HOW ARE YOU&lt;/srai&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>Note, spelling errors and synonyms can also be handling using <a href="http://docs.pandorabots.com/tutorials/substitutions-and-sentence-splitting/">normalization</a>.</p>
+
+  <h5>Returning Text and Recursing</h5>
+
+  <p>The previous examples of <code class="language-plaintext highlighter-rouge">&lt;srai&gt;</code> returned no text of their own. Your template, however, can return both text and <code class="language-plaintext highlighter-rouge">&lt;srai&gt;</code> tags.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;HOWDY&lt;/pattern&gt;
+&lt;template&gt;&lt;srai&gt;HI&lt;/srai&gt; Are you a cowboy?&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>This would return a response “Hello there! Are you a cowboy?” if a client inputs “Howdy”.</p>
+
+  <h5>Recursively Building a Complex Response</h5>
+
+  <p>Another use case of the srai element is to provide a recursive response to build a more complex response based on elements within the user’s input.  For example, you have a bot named “Buddy”:</p>
+
+  <p>User: You can say that again Buddy!<br />
+Bot: Once more? “that”.</p>
+
+  <p>Your bot may not have a specific response to the pattern “YOU CAN SAY THAT AGAIN BUDDY”. Instead you can build a response to the user input from partial phrase categories:</p>
+
+  <p>In step 1, the patterns with “_” match first based on AIML 2.0 wildcard priorities (from highest to lowest), for example:<br />
+<code class="language-plaintext highlighter-rouge"># AGAIN &gt; _ AGAIN &gt; THAT  AGAIN &gt;  ^ AGAIN &gt; * AGAIN</code></p>
+
+  <p>Whatever matches either wild-card symbol becomes the value of <star></star>.</p>
+
+  <table class="table table-striped table-bordered table-condensed">
+    <tr><th>Step</th><th>Normalized Input</th><th>Matching Pattern</th><th>Template</th><th>Response</th></tr>
+    <tr><td>1</td><td>YOU CAN SAY THAT AGAIN BUDDY</td><td>_ &lt;bot name="name" /&gt;</td><td>&lt;sr /&gt;</td><td></td></tr>
+    <tr><td>2</td><td>YOU CAN SAY THAT AGAIN</td><td>_ AGAIN</td><td>Once more? &lt;sr /&gt;</td><td>Once more?</td></tr>
+    <tr><td>3</td><td>YOU CAN SAY THAT</td><td>YOU CAN *</td><td>&lt;sr /&gt;</td><td>Once more?</td></tr>
+    <tr><td>4</td><td>SAY THAT</td><td>SAY *</td><td>"&lt;person /&gt;".</td><td>Once more? "that".</td></tr>
+</table>
+
+  <p>Steps 1 through 3 illustrate the common AIML templates that use the abbreviated ` <sr></sr>` tag. Remember, &lt;sr/&gt; = &lt;srai&gt;&lt;star/&gt;&lt;/srai&gt; See <a href="http://docs.pandorabots.com/aiml/sr/">AIML Reference</a> for details.</p>
+
+  <p>The categories with the patterns “_ &lt;bot name=”name” /&gt;” and “YOU CAN *” simply reduce the sentence to whatever matches the wildcard, as illustrated by steps 1 and 3.</p>
+
+  <p>Combining the <code class="language-plaintext highlighter-rouge">&lt;sr/&gt;</code> with an ordinary text response, as step 2 with the pattern “_ AGAIN”. The phrase “Once more?” becomes part of any reply ending in “AGAIN”.</p>
+
+  <p>The category in step 4 with “SAY *” is a default that often produces logically correct but amusing dialogue:</p>
+
+  <p>User: Say Hello in Swedish.<br />
+Bot: “Hello in Swedish.”</p>
+
+  <p>or as in this case:</p>
+
+  <p>User: Say that.<br />
+Bot: “that.”</p>
+
+  <p>Using the <code class="language-plaintext highlighter-rouge">&lt;person/&gt;</code> tag in this examples allows for the transforming of any pronouns. (See <a href="http://docs.pandorabots.com/aiml/person/">AIML reference</a> for more details).</p>
+
+  <p>User: Say you are a fish again.<br />
+Bot: Once more?  “I am a fish”.</p>
+
+  <p>In this particular case, you might not want pronoun transformation; it’s just included as an example for illustration.</p>
+
+  <p>Why reduce a complex sentence structure to simpler forms? These 4 categories can respond to a large number of inputs, not just the example, and can make a bot’s response seem more human-like.</p>
+
+  <h3 id="sraix">&lt;sraix &gt;</h3>
+
+  <p>The <em>sraix element</em> allows a bot to call categories that exist within another bot, and return response as if it was its own. This allows the creation of many bots, each with a specific purpose, that may connect with each other to form a sort of bot network.</p>
+
+  <h4>Attributes</h4>
+
+  <p><code class="language-plaintext highlighter-rouge">bot</code> (required)<br />
+Specifies the bot to call out to, defined by the <code class="language-plaintext highlighter-rouge">botid</code>. On the Pandorabots Platform, the <code class="language-plaintext highlighter-rouge">botid</code> is equivalent to <code class="language-plaintext highlighter-rouge">username/botname</code>. On the Developer Portal, it is defined as <code class="language-plaintext highlighter-rouge">app_id/botname</code>.</p>
+
+  <h4>Usage</h4>
+
+  <p>Imagine a user named “djf” with two bots, “olimpia” and “alice”. You could forward inputs from olimpia to alice, and return alice’s response to the user conversing with olimpia:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- from bot djf/olimpia --&gt;
+&lt;category&gt;
+  &lt;pattern&gt;WHAT IS FOO&lt;/pattern&gt;
+  &lt;template&gt;&lt;sraix bot="djf/alice"&gt;&lt;input/&gt;&lt;/sraix&gt;&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;!-- from bot djf/alice --&gt;
+&lt;category&gt;
+  &lt;pattern&gt;WHAT IS FOO&lt;/pattern&gt;
+  &lt;template&gt;Foo is bar.&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>So when talking to djf/olimpia, the following is possible:</p>
+
+  <blockquote>
+    <p><strong>Input:</strong> What is foo?<br />
+<strong>Output:</strong> Foo is bar.</p>
+  </blockquote>
+
+  <h3 id="star">&lt;star /&gt;</h3>
+
+  <p>The <em>star element</em> is used to echo portions of the user’s input that were captured by wildcards.</p>
+
+  <h4>Attributes</h4>
+
+  <p><code class="language-plaintext highlighter-rouge">index</code>
+Specifies which wildcard to echo (used when multiple wildcard are present). If no index is specified, defaults to 0.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;MY FAVORITE * IS *&lt;/pattern&gt;
+&lt;template&gt;Your favorite &lt;star /&gt; is &lt;star index="2" /&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> My favorite color is blue<br />
+<strong>Output:</strong> Your favorite color is blue</p>
+  </blockquote>
+
+  <h3 id="template">&lt;template&gt;</h3>
+
+  <p>The <em>template element</em> is the portion of category that defines its return value. It can contain a variety of other elements: some which return text directly to the user, and some which cause recursion and trigger new categories. Every category must contain a template block.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;HI&lt;/pattern&gt;
+&lt;template&gt;Hello there!&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <h3 id="that">&lt;that&gt;</h3>
+
+  <p>The <em>that element</em> is an optional child of the category element that is used to establish the context of the pattern. The bot is able to remember the last sentence it has said, and is defined as the value of “that”.</p>
+
+  <p>If a category contains a <em>that element</em>, the pattern can only be matched if the last sentence of the bot’s previous response matches the contents of <code class="language-plaintext highlighter-rouge">that</code>. In a sense, the <em>that element</em> binds a pattern to the immediate context of the conversation.</p>
+
+  <p>This is very useful for contextualizing common, simple user inputs such as “yes” or “no.”</p>
+
+  <p>This allows you to have many duplicate patterns that, depending on the previous response, will trigger different templates.</p>
+
+  <p>The <em>that element</em> follows all the rules of the pattern element: The previous sentence given by your bot will be stripped of punctuation when read by a category referencing it with <code class="language-plaintext highlighter-rouge">&lt;that&gt;</code> tags. The new category will also ignore differences in capitalization/non-capitalized letters, and will expect any normalization you have specified in normal.substitution file.</p>
+
+  <p>For these reasons, we recommend you write the contents of the <code class="language-plaintext highlighter-rouge">&lt;that&gt;</code> tags like patterns: no punctuation, all capital letters, and normalized. If you are having trouble getting your <code class="language-plaintext highlighter-rouge">&lt;that&gt;</code> to work, usually it is one of those three items being amiss in your <code class="language-plaintext highlighter-rouge">&lt;that&gt;</code> tag.</p>
+
+  <p>Also note:</p>
+  <ul>
+    <li><code class="language-plaintext highlighter-rouge">&lt;that&gt;</code> tags can contain wildcards!</li>
+    <li>Values for <em>that</em> variables are only within the scope of an active conversation. After some amount of idle time, the bot flushes context from memory.</li>
+  </ul>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;I LIKE COFFEE&lt;/pattern&gt;
+&lt;template&gt;Do you take cream or sugar in your coffee?&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;category&gt;
+&lt;pattern&gt;YES&lt;/pattern&gt;
+&lt;that&gt;DO YOU TAKE CREAM OR SUGAR IN YOUR COFFEE&lt;/that&gt;
+&lt;template&gt;I do too.&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;category&gt;
+&lt;pattern&gt;NO&lt;/pattern&gt;
+&lt;that&gt;DO YOU TAKE CREAM OR SUGAR IN YOUR COFFEE&lt;/that&gt;
+&lt;template&gt;Really? I have a hard time drinking black coffee.&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>In the above example, we have accounted a possible conversation timeline, where the user initiates the conversation, and the bot responds by asking the user a yes or no question. The problem, however, is that there area near infinite number of questions the user may answer with “yes” or “no”, so how does the bot know the context of the user’s answer? Because the second and third categories contain that blocks, they are both bound to a particular context. These categories will not be matched unless the bot’s previous response matches “DO YOU TAKE CREAM OR SUGAR IN YOUR COFFEE”.</p>
+
+  <p>In this example below, it shows how to use the normalized version in your <em>that element</em>, assuming that you have the normal.substitution file normalizing <em>don’t</em> to <em>do not</em></p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;I LIKE TEA&lt;/pattern&gt;
+&lt;template&gt;It's a civilized drink. Don't you agree?&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;category&gt;
+&lt;pattern&gt;I DO&lt;/pattern&gt;
+&lt;that&gt;DO NOT YOU AGREE&lt;/that&gt;
+&lt;template&gt;My favorite is Lady Grey!&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>Tip: Remember when crafting your <code class="language-plaintext highlighter-rouge">&lt;that&gt;</code> tag, use only the <em>last</em> sentence of your bot’s response! That is why the <code class="language-plaintext highlighter-rouge">that</code> tag in the category above only has the normalized “DO NOT YOU AGREE” and does not include the previous sentence of “IT IS A CIVILIZED DRINK”.</p>
+
+  <h3 id="thatstar">&lt;thatstar /&gt;</h3>
+
+  <p>The <em>thatstar element</em> is used to echo wildcard contents found inside of <code class="language-plaintext highlighter-rouge">&lt;that&gt;</code> tags.</p>
+
+  <h4>Attributes</h4>
+
+  <p><code class="language-plaintext highlighter-rouge">index</code>
+Specifies the index of the wildcard to echo. If no index is specified, defaults to 0.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;I LIKE IT TOO&lt;/pattern&gt;
+&lt;that&gt;I LIKE *&lt;/that&gt;
+&lt;template&gt;What do you like best about &lt;thatstar /&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> …<br />
+<strong>Output:</strong> I like coffee.<br />
+<strong>Input:</strong> I like it too.<br />
+<strong>Output:</strong> What do you like best about coffee?</p>
+  </blockquote>
+
+  <p>This type of category is useful for dealing with pronoun resolution (<em>anaphora</em>). If the user inputs the word “it”, you can implement a that element and a thatstar element to keep a reference to the original noun in question.</p>
+
+  <h3 id="think">&lt;think&gt;</h3>
+
+  <p>The <em>think element</em> allows your bot to set predicates without actually displaying the contents of a set element to the user. This is sometimes referred to as “silently” setting a predicate.</p>
+
+  <h4>Usage</h4>
+
+  <p>Consider this example, which sets a predicate, but does so in a way that the contents of the set element is actually returned to the user as part of the template:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;MY NAME IS *&lt;/pattern&gt;
+&lt;template&gt;
+  Nice to meet you, &lt;set name="name"&gt;&lt;star /&gt;&lt;/set&gt;
+  &lt;/template&gt;
+  &lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> My name is Daniel<br />
+<strong>Output:</strong> Nice to meet you, Daniel</p>
+  </blockquote>
+
+  <p>You can use the think tag to set the <code class="language-plaintext highlighter-rouge">name</code> predicate, without actually repeating the value of the predicate to the user:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;MY NAME IS *&lt;/pattern&gt;
+&lt;template&gt;
+  &lt;think&gt;&lt;set name="name"&gt;&lt;star /&gt;&lt;/set&gt;&lt;/think&gt;
+  I will remember your name.
+&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> My name is Daniel<br />
+<strong>Output:</strong> I will remember your name</p>
+  </blockquote>
+
+  <h3 id="topic">&lt;topic&gt;</h3>
+
+  <p>The <em>topic element</em> allows you to contextualize categories according to the value of a built-in
+predicate named <code class="language-plaintext highlighter-rouge">"topic"</code>. Like the <em>that element</em>, topic binds a pattern to a particular context.
+This allows you to store a certain context for longer than just 1 interaction.</p>
+
+  <p>The <em>topic element</em> is unique to most AIML elements in that it appears outside of category blocks.
+You can wrap a number of categories within a <em>topic element</em> to bind all of those categories.
+These categories can only be matched if the topic has been set to a certain value. This can be
+used to write duplicate patterns whose templates vary depending on the context of the conversation</p>
+
+  <p>It should also be noted that the predicate name “topic” is reserved for this purpose.</p>
+
+  <h4>Attributes</h4>
+
+  <p><code class="language-plaintext highlighter-rouge">name</code> (required)
+Refers to a possible value of the topic predicate.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;LET US TALK ABOUT *&lt;/pattern&gt;
+&lt;template&gt;
+  OK, I like &lt;set name="topic"&gt;&lt;star /&gt;&lt;/set&gt;
+&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;topic name="coffee"&gt;
+
+&lt;category&gt;
+&lt;pattern&gt;I DRINK IT PLAIN&lt;/pattern&gt;
+&lt;template&gt;I prefer mine with cream and sugar&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;/topic&gt;
+
+&lt;topic name="tea"&gt;
+
+&lt;category&gt;
+&lt;pattern&gt;I DRINK IT PLAIN&lt;/pattern&gt;
+&lt;template&gt;I prefer mine with honey and lemon&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;/topic&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> Let us talk about coffee<br />
+<strong>Output:</strong> OK, I like coffee<br />
+<strong>Input:</strong> I drink it plain<br />
+<strong>Output:</strong> I prefer mine with cream and sugar<br />
+<strong>Input:</strong> Let us talk about tea<br />
+<strong>Output:</strong> OK, I like tea<br />
+<strong>Input:</strong> I drink it plain<br />
+<strong>Output:</strong> I prefer mine with honey and lemon</p>
+  </blockquote>
+
+  <p>This rudimentary example shows how setting the topic can also assist in contextualizing an input. If the user says something like “I drink it plain,” the bot must have some way of knowing what “it” refers to in order to provide a relevent answer. This is illustrated in the above example via the different things one might add to coffee or tea. Depending on the value of the topic predicate, the bot will know which set of beverage additions to respond with.</p>
+
+  <p>If you set a topic with no value, the value will be “unknown” based on bot property default-get.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;set name="topic"&gt;&lt;/set&gt;     --  topic = "unknown"
+</code></pre></div>  </div>
+
+  <p><strong>NOTE:</strong> Values for topic variables are only within the scope of an active conversation. Once a conversation goes idle, value for topic is cleared, in a similar way as human conversations (a reset of topic per se).</p>
+
+  <hr />
+  <p>layout: aiml
+title: topicstar
+—</p>
+
+  <h3 id="topicstar">&lt;topicstar&gt;</h3>
+
+  <p>The <em>topicstar element</em> will either return the current topic if used outside of a <em>topic element</em> or the <em>wildcard element</em> when inside a <em>topic element</em>.  The <em>topicstar element</em> can also use index like the <em>star element</em> can, though this will return as the default case for empty predicates if no wildcards are present.</p>
+
+  <h4>Usage</h4>
+
+  <p>This is useful for knowing what your wildcards are actually containing or if you interested in what your topic is outside of your <em>topic element</em>.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;I WOULD LIKE MILK&lt;/pattern&gt;
+&lt;template&gt;Ok.&lt;think&gt;&lt;set name=”topic”&gt;milk&lt;/set&gt;&lt;/think&gt; You want &lt;topicstar/&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> I would like milk.<br />
+<strong>Output:</strong> Ok. You want MILK</p>
+  </blockquote>
+
+  <p>As a reminder the topicstar element only takes what is inside the wildcard in the topic element’s name.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+&lt;pattern&gt;I WOULD LIKE MILK&lt;/pattern&gt;
+&lt;template&gt;Ok. &lt;think&gt;&lt;set name=”topic”&gt;beverages milk&lt;/set&gt;&lt;/think&gt;&lt;/template&gt;
+&lt;/category&gt;
+
+&lt;topic name=”beverages *”&gt;
+&lt;category&gt;
+&lt;pattern&gt;WHAT DO I WANT&lt;/pattern&gt;
+&lt;template&gt;&lt;topicstar/&gt;&lt;/template&gt;
+&lt;/category&gt;
+&lt;/topic&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> I would like milk.<br />
+<strong>Output:</strong> Ok.<br />
+<strong>Input:</strong> What do I want?<br />
+<strong>Output:</strong> MILK</p>
+  </blockquote>
+
+  <h3 id="uppercase">&lt;uppercase&gt;</h3>
+
+  <p>The <em>uppercase element</em> transforms all letters in its contents to uppercase.</p>
+
+  <h4>Usage</h4>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;
+  &lt;pattern&gt;A B C&lt;/pattern&gt;
+  &lt;template&gt;&lt;uppercase&gt;&lt;input/&gt;&lt;/uppercase&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <blockquote>
+    <p><strong>Input:</strong> a b c<br />
+<strong>Output:</strong> A B C</p>
+  </blockquote>
+
+  <h3 id="video">&lt;video /&gt;</h3>
+
+  <p>The <em>video tag</em> allows your bot to send back video responses. It’s simple to use - just wrap the tag around the <em>url</em> of the video.</p>
+
+  <h4>Usage</h4>
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;video&gt;https://url.for.video&lt;/video&gt;
+</code></pre></div>  </div>
+
+</div>
+
+    </div>
+
+    <script type="text/javascript" src="/docs/assets/js/search-result-highlighter.js"></script>
+    <script>
+      $(document).ready(function() {
+        var sidebar = `<div markdown="1" class="pb-docs__navbar">
+  <form action="/docs/aiml-reference/">
+  <div class="tipue_search_wrapper">
+    <div class="tipue_search_left">
+      <img src="/docs/assets/tipuesearch/search.png" class="tipue_search_icon"/>
+    </div>
+    <div class="tipue_search_right">
+      <input placeholder="Type to search" type="text" name="q" id="tipue_search_input" pattern=".{3,}" title="At least 3 characters" required/>
+    </div>
+  </div>
+  <div style="clear: both;"></div>
+  <div id="tipue_search_content"></div>
+  <div style="clear: both;"></div>
+</form>
+
+
+  
+  
+  <h2></h2>
+  <ul>
+    
+    
+  </ul>
+  
+  <h2>PLATFORM OVERVIEW</h2>
+  <ul>
+    
+    
+      <li class="pb-collapse" id="About Pandorabots-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/">About Pandorabots</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Feature Comparison-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/feature-comparison/">Feature Comparison</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="FAQ-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/faq/">FAQ</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/faq/#aiml">AIML</a></li>
+  <li><a href="/docs/faq/#api">API</a></li>
+  <li><a href="/docs/faq/#bots">Bots</a></li>
+  <li><a href="/docs/faq/#integrations">Integrations</a></li>
+  <li><a href="/docs/faq/#limits">Limits</a></li>
+  <li><a href="/docs/faq/#pricing">Pricing</a></li>
+  <li><a href="/docs/faq/#privacy">Privacy, Security &amp; Legal</a></li>
+  <li><a href="/docs/faq/#interface">User Interface</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+  </ul>
+  
+  <h2>AIML</h2>
+  <ul>
+    
+    
+      <li class="pb-collapse" id="AIML Fundamentals-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/aiml-fundamentals/">AIML Fundamentals</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="AIML: An Introduction-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/aiml-basics/">AIML: An Introduction</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="AIML Libraries-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/aiml-libraries/">AIML Libraries</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/aiml-libraries/#aiml-standard-library">AIML Standard Libraries</a></li>
+  <li><a href="/docs/aiml-libraries/#using-rosie">Modifying Small Talk files</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+      <li class="pb-collapse" id="AIML Reference-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/aiml-reference/">AIML Reference</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items pb-docs__navbar__collapse__items--active">
+            <ul>
+  <li><a href="/docs/aiml-reference/#aiml">aiml</a></li>
+  <li><a href="/docs/aiml-reference/#bot">bot</a></li>
+  <li><a href="/docs/aiml-reference/#button">button</a></li>
+  <li><a href="/docs/aiml-reference/#card">card</a></li>
+  <li><a href="/docs/aiml-reference/#carousel">carousel</a></li>
+  <li><a href="/docs/aiml-reference/#category">category</a></li>
+  <li><a href="/docs/aiml-reference/#condition">condition</a></li>
+  <li><a href="/docs/aiml-reference/#date">date</a></li>
+  <li><a href="/docs/aiml-reference/#delay">delay</a></li>
+  <li><a href="/docs/aiml-reference/#denormalize">denormalize</a></li>
+  <li><a href="/docs/aiml-reference/#eval">eval</a></li>
+  <li><a href="/docs/aiml-reference/#explode">explode</a></li>
+  <li><a href="/docs/aiml-reference/#first">first</a></li>
+  <li><a href="/docs/aiml-reference/#formal">formal</a></li>
+  <li><a href="/docs/aiml-reference/#gender">gender</a></li>
+  <li><a href="/docs/aiml-reference/#get">get</a></li>
+  <li><a href="/docs/aiml-reference/#id">id</a></li>
+  <li><a href="/docs/aiml-reference/#image">image</a></li>
+  <li><a href="/docs/aiml-reference/#input">input</a></li>
+  <li><a href="/docs/aiml-reference/#interval">interval</a></li>
+  <li><a href="/docs/aiml-reference/#learn">learn</a></li>
+  <li><a href="/docs/aiml-reference/#li">li</a></li>
+  <li><a href="/docs/aiml-reference/#link">link</a></li>
+  <li><a href="/docs/aiml-reference/#loop">loop</a></li>
+  <li><a href="/docs/aiml-reference/#lowercase">lowercase</a></li>
+  <li><a href="/docs/aiml-reference/#map">map</a></li>
+  <li><a href="/docs/aiml-reference/#normalize">normalize</a></li>
+  <li><a href="/docs/aiml-reference/#pattern">pattern</a></li>
+  <li><a href="/docs/aiml-reference/#person">person</a></li>
+  <li><a href="/docs/aiml-reference/#person2">person2</a></li>
+  <li><a href="/docs/aiml-reference/#program">program</a></li>
+  <li><a href="/docs/aiml-reference/#random">random</a></li>
+  <li><a href="/docs/aiml-reference/#reply">reply</a></li>
+  <li><a href="/docs/aiml-reference/#response">response</a></li>
+  <li><a href="/docs/aiml-reference/#rest">rest</a></li>
+  <li><a href="/docs/aiml-reference/#sentence">sentence</a></li>
+  <li><a href="/docs/aiml-reference/#set">set</a></li>
+  <li><a href="/docs/aiml-reference/#size">size</a></li>
+  <li><a href="/docs/aiml-reference/#split">split</a></li>
+  <li><a href="/docs/aiml-reference/#sr">sr</a></li>
+  <li><a href="/docs/aiml-reference/#srai">srai</a></li>
+  <li><a href="/docs/aiml-reference/#sraix">sraix</a></li>
+  <li><a href="/docs/aiml-reference/#star">star</a></li>
+  <li><a href="/docs/aiml-reference/#template">template</a></li>
+  <li><a href="/docs/aiml-reference/#that">that</a></li>
+  <li><a href="/docs/aiml-reference/#thatstar">thatstar</a></li>
+  <li><a href="/docs/aiml-reference/#think">think</a></li>
+  <li><a href="/docs/aiml-reference/#topic">topic</a></li>
+  <li><a href="/docs/aiml-reference/#topicstar">topicstar</a></li>
+  <li><a href="/docs/aiml-reference/#uppercase">uppercase</a></li>
+  <li><a href="/docs/aiml-reference/#video">video</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Core Concept Deep Dives-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/core-concepts/">Core Concept Deep Dives</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/core-concepts/#predicates">Predicates</a></li>
+  <li><a href="/docs/core-concepts/#substitutions">Substitutions &amp; Sentence Splitting</a></li>
+  <li><a href="/docs/core-concepts/#wildcards">Wildcards</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+  </ul>
+  
+  <h2>API REFERENCE</h2>
+  <ul>
+    
+    
+      <li class="pb-collapse" id="API Basics-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/api-basics/">API Basics</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="API Endpoints-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/api-endpoints/">API Endpoints</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/api-endpoints/#get-bot">List of bots</a></li>
+  <li><a href="/docs/api-endpoints/#put-bot">Create a bot</a></li>
+  <li><a href="/docs/api-endpoints/#delete-bot">Delete a bot</a></li>
+  <li><a href="/docs/api-endpoints/#get-files">List of bot files</a></li>
+  <li><a href="/docs/api-endpoints/#upload-file">Upload a bot file (AIML, set, substitution, map)</a></li>
+  <li><a href="/docs/api-endpoints/#upload-properties">Upload a bot file (pdefaults, properties)</a></li>
+  <li><a href="/docs/api-endpoints/#delete-file">Delete a bot file (AIML, set, map, substitution)</a></li>
+  <li><a href="/docs/api-endpoints/#delete-properties">Delete a bot file (pdefaults, properties)</a></li>
+  <li><a href="/docs/api-endpoints/#retrieve-file">Retrieve a bot file (AIML, set, map, substitution)</a></li>
+  <li><a href="/docs/api-endpoints/#retrieve-properties">Retrieve a bot file (pdefaults, properties)</a></li>
+  <li><a href="/docs/api-endpoints/#compile-bot">Compile a bot</a></li>
+  <li><a href="/docs/api-endpoints/#talk-to-bot-public">Talk to a bot</a></li>
+  <li><a href="/docs/api-endpoints/#atalk-to-bot-public">Anonymous talk</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Command Line Interface-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/command-line-interface/">Command Line Interface</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="SDKs-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/sdks/">SDKs</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Related Articles-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/related-articles/">Related Articles</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/related-articles/#manage-end-users">End-User Management with A-Talk API</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+  </ul>
+  
+  <h2>BUILDING BOTS</h2>
+  <ul>
+    
+    
+      <li class="pb-collapse" id="Hello World-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/building-bots/">Hello World</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Bot Building 101-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/building-bots/tutorial/">Bot Building 101</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/building-bots/tutorial/#core-concepts">Core Concepts</a></li>
+  <li><a href="/docs/building-bots/tutorial/#platform-components">Platform Components</a></li>
+</ul>
+<li>
+  <ul>
+    <li><a href="/docs/building-bots/tutorial/#basic-aiml-training">Basic AIML Training</a>
+      <ul>
+        <li><a href="/docs/building-bots/tutorial/#bat-categories">Categories</a></li>
+        <li><a href="/docs/building-bots/tutorial/#bat-wildcards">Wildcards</a></li>
+        <li><a href="/docs/building-bots/tutorial/#bat-variables">Variables</a></li>
+        <li><a href="/docs/building-bots/tutorial/#recursion-and-reduction">Recursion and Reduction</a></li>
+        <li><a href="/docs/building-bots/tutorial/#sets-and-maps">Sets and Maps</a></li>
+        <li><a href="/docs/building-bots/tutorial/#context">Context</a></li>
+        <li><a href="/docs/building-bots/tutorial/#learning">Learning</a></li>
+        <li><a href="/docs/building-bots/tutorial/#revisiting-key-platform-components">Revisiting Key Platform Components</a></li>
+      </ul>
+    </li>
+  </ul>
+</li>
+<ul>
+  <li><a href="/docs/building-bots/tutorial/#additional-aiml-features">Additional AIML Features</a></li>
+  <li><a href="/docs/building-bots/tutorial/#next-steps">Next Steps: Deploying Your Bot</a></li>
+  <li><a href="/docs/building-bots/tutorial/#updating-your-bot">Updating your Bot</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Specific Use Cases-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/building-bots/use-cases/">Specific Use Cases</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/building-bots/use-cases/#faq">FAQ Bot</a></li>
+  <li><a href="/docs/building-bots/use-cases/#concierge">Concierge Bot</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Quickstart-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/building-bots/quickstart/">Quickstart</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Small Talk-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/building-bots/small-talk/">Small Talk</a>
+        
+      </li>
+    
+  </ul>
+  
+  <h2>DEPLOY & EXTEND</h2>
+  <ul>
+    
+    
+      <li class="pb-collapse" id="Integrations-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/integrations/">Integrations</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/integrations/#browser">Chat Widget</a></li>
+  <li><a href="/docs/integrations/#firebase">Firebase</a></li>
+  <li><a href="/docs/integrations/#mustache">Using Data Dynamically</a></li>
+  <li><a href="/docs/integrations/#slack">Slack</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Social Messaging-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/social-messaging/">Social Messaging</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Landing Page-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/bot-landing-page/">Landing Page</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Call API-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/callapi/">Call API</a>
+        
+      </li>
+    
+  </ul>
+  
+  <h2>FEATURES</h2>
+  <ul>
+    
+    
+      <li class="pb-collapse" id="Live Training-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/live-training/">Live Training</a>
+        
+      </li>
+    
+  </ul>
+  
+</div>`
+
+        const sidebarDiv = document.createElement('div')
+        sidebarDiv.innerHTML = sidebar
+
+        const container = document.querySelector('.pb-docs')
+        container.insertBefore(sidebarDiv, container.firstChild)
+
+        function _runSearch() {
+          $('#tipue_search_input').tipuesearch({
+            wholeWords: false
+          });
+          highlightSearchResult()
+        }
+
+        setTimeout(_runSearch, 200)
+      });
+    </script>
+  </body>
+</html>

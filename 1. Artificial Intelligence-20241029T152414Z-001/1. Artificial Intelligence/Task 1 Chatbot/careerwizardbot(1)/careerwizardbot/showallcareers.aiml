@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+	
+	<category>
+	    <pattern>SHOWALLCAREERS</pattern>
+	    <template>
+	        <card>
+	            <title>HERE ARE THE TOP 6 CS CAREERS</title>
+	            <subtitle>Note: Links will open a new window</subtitle>
+        	    <button>
+        	        <text>CYBERSECURITY COURSERA</text>
+        	        <url>https://www.coursera.org/articles/cybersecurity-job-description</url>
+                </button>
+                <button>
+        	        <text>QUALITY ASSURANCE COURSERA</text>
+        	        <url>https://www.coursera.org/articles/qa-tester</url>
+                </button>
+                <button>
+                    <text>DATA SCIENCE COURSERA</text>
+                    <url>https://www.coursera.org/articles/what-is-a-data-scientist</url>
+                </button>
+                <button>
+                    <text>BACKEND DEVELOPMENT COURSERA</text>
+                    <url>https://www.coursera.org/articles/back-end-developer</url>
+                </button>
+                <button>
+                    <text>FRONTEND DEVELOPMENT COURSERA</text>
+                    <url>https://www.coursera.org/articles/front-end-developer</url>
+                </button>
+                <button>
+                    <text>NETWORK ENGINEERING COURSERA</text>
+                    <url>https://www.coursera.org/articles/network-engineer</url>
+                </button>
+            </card>
+	    </template>
+    </category>
+</aiml>

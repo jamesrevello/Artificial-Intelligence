@@ -1,0 +1,463 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Pandorabots Documentation</title>
+    <link rel="stylesheet" href="/docs/assets/css/styles.css">
+    
+      <link rel="stylesheet" href="/docs/assets/tipuesearch/css/normalize.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <script src="/docs/assets/tipuesearch/tipuesearch_content.js"></script>
+      <link rel="stylesheet" href="/docs/assets/tipuesearch/css/tipuesearch.css">
+      <script src="/docs/assets/tipuesearch/tipuesearch_set.js"></script>
+      <script src="/docs/assets/tipuesearch/tipuesearch.min.js"></script>
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-49503515-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-49503515-7');
+    </script>
+  </head>
+  <body>
+    <div class="pb-docs">
+        <div class="pb-docs__content">
+
+  <h1>Artificial Intelligence Markup Language (AIML)</h1>
+
+  <h3>History of AIML</h3>
+
+  <p>The <strong>XML dialect</strong> called AIML was originally developed by <a href="https://en.wikipedia.org/wiki/Richard_Wallace_%28scientist%29" target="_blank">Dr. Richard Wallace</a> and a worldwide <a href="https://en.wikipedia.org/wiki/Free_software_community" target="_blank">free software community</a> between 1995 and 2002. AIML formed the basis for what was initially a highly extended <a href="https://en.wikipedia.org/wiki/ELIZA" target="_blank">Eliza</a> called “<a href="https://en.wikipedia.org/wiki/Artificial_Linguistic_Internet_Computer_Entity" target="_blank">A.L.I.C.E.</a>.” (“Artificial Linguistic Internet Computer Entity”), which won numerous awards. Because the A.L.I.C.E. AIML set was released under the <a href="https://en.wikipedia.org/wiki/GNU_GPL" target="_blank">GNU GPL</a>, and because most AIML interpreters are offered under a <a href="https://en.wikipedia.org/wiki/Free_Software" target="_blank">free</a> or <a href="https://en.wikipedia.org/wiki/Open_source" target="_blank">opensource</a> license many “Alicebot clones” have been created based upon the original implementation of the program and its AIML knowledge base.</p>
+
+  <p>The Pandorabots platform implements and supports development of the AIML open standard. It is the most popular open standard scripting language for creating chatbots available on the market to date. A number of AIML interpreters have been written in a variety of languages and open sourced, and a number of other bot platforms support AIML explicitly or under the hood.</p>
+
+  <h4><strong>AIML 2.0</strong></h4>
+
+  <p>The AIML 2.0 specification (released as an initial draft in 2013) introduced a number of new features to the language that dramatically improve on AIML 1.x and the natural language processing power of chatbots. These features include:</p>
+
+  <ul>
+    <li>Zero+ Wildcards</li>
+    <li>Highest Priority Matching</li>
+    <li>Migration from XML attributes to tags</li>
+    <li>AIML Sets</li>
+    <li>AIML Maps</li>
+    <li>Loops</li>
+    <li>Local variables</li>
+    <li>Sraix</li>
+    <li>Denormalization</li>
+    <li>Pandorabots Extensions
+      <ul>
+        <li>date</li>
+        <li>request</li>
+        <li>response</li>
+        <li>unbound predicates</li>
+        <li>learn</li>
+        <li>learnf</li>
+        <li>explode</li>
+      </ul>
+    </li>
+    <li>OOB (Out of Band) Tags</li>
+  </ul>
+
+  <p>The current Pandorabots AIML interpreter is backwards compatible with AIML 1.0, so platform users can make full use of old bot files. However, it does not currently support Javascript.</p>
+
+  <p>For more details, please read Dr. Richard Wallace’s full <a href="http://aiml.foundation" target="_blank">AIML 2.0 specification</a>.</p>
+
+</div>
+
+    </div>
+
+    <script type="text/javascript" src="/docs/assets/js/search-result-highlighter.js"></script>
+    <script>
+      $(document).ready(function() {
+        var sidebar = `<div markdown="1" class="pb-docs__navbar">
+  <form action="/docs/aiml-basics/">
+  <div class="tipue_search_wrapper">
+    <div class="tipue_search_left">
+      <img src="/docs/assets/tipuesearch/search.png" class="tipue_search_icon"/>
+    </div>
+    <div class="tipue_search_right">
+      <input placeholder="Type to search" type="text" name="q" id="tipue_search_input" pattern=".{3,}" title="At least 3 characters" required/>
+    </div>
+  </div>
+  <div style="clear: both;"></div>
+  <div id="tipue_search_content"></div>
+  <div style="clear: both;"></div>
+</form>
+
+
+  
+  
+  <h2></h2>
+  <ul>
+    
+    
+  </ul>
+  
+  <h2>PLATFORM OVERVIEW</h2>
+  <ul>
+    
+    
+      <li class="pb-collapse" id="About Pandorabots-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/">About Pandorabots</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Feature Comparison-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/feature-comparison/">Feature Comparison</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="FAQ-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/faq/">FAQ</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/faq/#aiml">AIML</a></li>
+  <li><a href="/docs/faq/#api">API</a></li>
+  <li><a href="/docs/faq/#bots">Bots</a></li>
+  <li><a href="/docs/faq/#integrations">Integrations</a></li>
+  <li><a href="/docs/faq/#limits">Limits</a></li>
+  <li><a href="/docs/faq/#pricing">Pricing</a></li>
+  <li><a href="/docs/faq/#privacy">Privacy, Security &amp; Legal</a></li>
+  <li><a href="/docs/faq/#interface">User Interface</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+  </ul>
+  
+  <h2>AIML</h2>
+  <ul>
+    
+    
+      <li class="pb-collapse" id="AIML Fundamentals-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/aiml-fundamentals/">AIML Fundamentals</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="AIML: An Introduction-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/aiml-basics/">AIML: An Introduction</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="AIML Libraries-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/aiml-libraries/">AIML Libraries</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/aiml-libraries/#aiml-standard-library">AIML Standard Libraries</a></li>
+  <li><a href="/docs/aiml-libraries/#using-rosie">Modifying Small Talk files</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+      <li class="pb-collapse" id="AIML Reference-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/aiml-reference/">AIML Reference</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/aiml-reference/#aiml">aiml</a></li>
+  <li><a href="/docs/aiml-reference/#bot">bot</a></li>
+  <li><a href="/docs/aiml-reference/#button">button</a></li>
+  <li><a href="/docs/aiml-reference/#card">card</a></li>
+  <li><a href="/docs/aiml-reference/#carousel">carousel</a></li>
+  <li><a href="/docs/aiml-reference/#category">category</a></li>
+  <li><a href="/docs/aiml-reference/#condition">condition</a></li>
+  <li><a href="/docs/aiml-reference/#date">date</a></li>
+  <li><a href="/docs/aiml-reference/#delay">delay</a></li>
+  <li><a href="/docs/aiml-reference/#denormalize">denormalize</a></li>
+  <li><a href="/docs/aiml-reference/#eval">eval</a></li>
+  <li><a href="/docs/aiml-reference/#explode">explode</a></li>
+  <li><a href="/docs/aiml-reference/#first">first</a></li>
+  <li><a href="/docs/aiml-reference/#formal">formal</a></li>
+  <li><a href="/docs/aiml-reference/#gender">gender</a></li>
+  <li><a href="/docs/aiml-reference/#get">get</a></li>
+  <li><a href="/docs/aiml-reference/#id">id</a></li>
+  <li><a href="/docs/aiml-reference/#image">image</a></li>
+  <li><a href="/docs/aiml-reference/#input">input</a></li>
+  <li><a href="/docs/aiml-reference/#interval">interval</a></li>
+  <li><a href="/docs/aiml-reference/#learn">learn</a></li>
+  <li><a href="/docs/aiml-reference/#li">li</a></li>
+  <li><a href="/docs/aiml-reference/#link">link</a></li>
+  <li><a href="/docs/aiml-reference/#loop">loop</a></li>
+  <li><a href="/docs/aiml-reference/#lowercase">lowercase</a></li>
+  <li><a href="/docs/aiml-reference/#map">map</a></li>
+  <li><a href="/docs/aiml-reference/#normalize">normalize</a></li>
+  <li><a href="/docs/aiml-reference/#pattern">pattern</a></li>
+  <li><a href="/docs/aiml-reference/#person">person</a></li>
+  <li><a href="/docs/aiml-reference/#person2">person2</a></li>
+  <li><a href="/docs/aiml-reference/#program">program</a></li>
+  <li><a href="/docs/aiml-reference/#random">random</a></li>
+  <li><a href="/docs/aiml-reference/#reply">reply</a></li>
+  <li><a href="/docs/aiml-reference/#response">response</a></li>
+  <li><a href="/docs/aiml-reference/#rest">rest</a></li>
+  <li><a href="/docs/aiml-reference/#sentence">sentence</a></li>
+  <li><a href="/docs/aiml-reference/#set">set</a></li>
+  <li><a href="/docs/aiml-reference/#size">size</a></li>
+  <li><a href="/docs/aiml-reference/#split">split</a></li>
+  <li><a href="/docs/aiml-reference/#sr">sr</a></li>
+  <li><a href="/docs/aiml-reference/#srai">srai</a></li>
+  <li><a href="/docs/aiml-reference/#sraix">sraix</a></li>
+  <li><a href="/docs/aiml-reference/#star">star</a></li>
+  <li><a href="/docs/aiml-reference/#template">template</a></li>
+  <li><a href="/docs/aiml-reference/#that">that</a></li>
+  <li><a href="/docs/aiml-reference/#thatstar">thatstar</a></li>
+  <li><a href="/docs/aiml-reference/#think">think</a></li>
+  <li><a href="/docs/aiml-reference/#topic">topic</a></li>
+  <li><a href="/docs/aiml-reference/#topicstar">topicstar</a></li>
+  <li><a href="/docs/aiml-reference/#uppercase">uppercase</a></li>
+  <li><a href="/docs/aiml-reference/#video">video</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Core Concept Deep Dives-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/core-concepts/">Core Concept Deep Dives</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/core-concepts/#predicates">Predicates</a></li>
+  <li><a href="/docs/core-concepts/#substitutions">Substitutions &amp; Sentence Splitting</a></li>
+  <li><a href="/docs/core-concepts/#wildcards">Wildcards</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+  </ul>
+  
+  <h2>API REFERENCE</h2>
+  <ul>
+    
+    
+      <li class="pb-collapse" id="API Basics-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/api-basics/">API Basics</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="API Endpoints-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/api-endpoints/">API Endpoints</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/api-endpoints/#get-bot">List of bots</a></li>
+  <li><a href="/docs/api-endpoints/#put-bot">Create a bot</a></li>
+  <li><a href="/docs/api-endpoints/#delete-bot">Delete a bot</a></li>
+  <li><a href="/docs/api-endpoints/#get-files">List of bot files</a></li>
+  <li><a href="/docs/api-endpoints/#upload-file">Upload a bot file (AIML, set, substitution, map)</a></li>
+  <li><a href="/docs/api-endpoints/#upload-properties">Upload a bot file (pdefaults, properties)</a></li>
+  <li><a href="/docs/api-endpoints/#delete-file">Delete a bot file (AIML, set, map, substitution)</a></li>
+  <li><a href="/docs/api-endpoints/#delete-properties">Delete a bot file (pdefaults, properties)</a></li>
+  <li><a href="/docs/api-endpoints/#retrieve-file">Retrieve a bot file (AIML, set, map, substitution)</a></li>
+  <li><a href="/docs/api-endpoints/#retrieve-properties">Retrieve a bot file (pdefaults, properties)</a></li>
+  <li><a href="/docs/api-endpoints/#compile-bot">Compile a bot</a></li>
+  <li><a href="/docs/api-endpoints/#talk-to-bot-public">Talk to a bot</a></li>
+  <li><a href="/docs/api-endpoints/#atalk-to-bot-public">Anonymous talk</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Command Line Interface-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/command-line-interface/">Command Line Interface</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="SDKs-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/sdks/">SDKs</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Related Articles-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/related-articles/">Related Articles</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/related-articles/#manage-end-users">End-User Management with A-Talk API</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+  </ul>
+  
+  <h2>BUILDING BOTS</h2>
+  <ul>
+    
+    
+      <li class="pb-collapse" id="Hello World-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/building-bots/">Hello World</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Bot Building 101-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/building-bots/tutorial/">Bot Building 101</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/building-bots/tutorial/#core-concepts">Core Concepts</a></li>
+  <li><a href="/docs/building-bots/tutorial/#platform-components">Platform Components</a></li>
+</ul>
+<li>
+  <ul>
+    <li><a href="/docs/building-bots/tutorial/#basic-aiml-training">Basic AIML Training</a>
+      <ul>
+        <li><a href="/docs/building-bots/tutorial/#bat-categories">Categories</a></li>
+        <li><a href="/docs/building-bots/tutorial/#bat-wildcards">Wildcards</a></li>
+        <li><a href="/docs/building-bots/tutorial/#bat-variables">Variables</a></li>
+        <li><a href="/docs/building-bots/tutorial/#recursion-and-reduction">Recursion and Reduction</a></li>
+        <li><a href="/docs/building-bots/tutorial/#sets-and-maps">Sets and Maps</a></li>
+        <li><a href="/docs/building-bots/tutorial/#context">Context</a></li>
+        <li><a href="/docs/building-bots/tutorial/#learning">Learning</a></li>
+        <li><a href="/docs/building-bots/tutorial/#revisiting-key-platform-components">Revisiting Key Platform Components</a></li>
+      </ul>
+    </li>
+  </ul>
+</li>
+<ul>
+  <li><a href="/docs/building-bots/tutorial/#additional-aiml-features">Additional AIML Features</a></li>
+  <li><a href="/docs/building-bots/tutorial/#next-steps">Next Steps: Deploying Your Bot</a></li>
+  <li><a href="/docs/building-bots/tutorial/#updating-your-bot">Updating your Bot</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Specific Use Cases-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/building-bots/use-cases/">Specific Use Cases</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/building-bots/use-cases/#faq">FAQ Bot</a></li>
+  <li><a href="/docs/building-bots/use-cases/#concierge">Concierge Bot</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Quickstart-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/building-bots/quickstart/">Quickstart</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Small Talk-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/building-bots/small-talk/">Small Talk</a>
+        
+      </li>
+    
+  </ul>
+  
+  <h2>DEPLOY & EXTEND</h2>
+  <ul>
+    
+    
+      <li class="pb-collapse" id="Integrations-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/integrations/">Integrations</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/integrations/#browser">Chat Widget</a></li>
+  <li><a href="/docs/integrations/#firebase">Firebase</a></li>
+  <li><a href="/docs/integrations/#mustache">Using Data Dynamically</a></li>
+  <li><a href="/docs/integrations/#slack">Slack</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Social Messaging-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/social-messaging/">Social Messaging</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Landing Page-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/bot-landing-page/">Landing Page</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Call API-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/callapi/">Call API</a>
+        
+      </li>
+    
+  </ul>
+  
+  <h2>FEATURES</h2>
+  <ul>
+    
+    
+      <li class="pb-collapse" id="Live Training-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/live-training/">Live Training</a>
+        
+      </li>
+    
+  </ul>
+  
+</div>`
+
+        const sidebarDiv = document.createElement('div')
+        sidebarDiv.innerHTML = sidebar
+
+        const container = document.querySelector('.pb-docs')
+        container.insertBefore(sidebarDiv, container.firstChild)
+
+        function _runSearch() {
+          $('#tipue_search_input').tipuesearch({
+            wholeWords: false
+          });
+          highlightSearchResult()
+        }
+
+        setTimeout(_runSearch, 200)
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+	
+	<category>
+	    <pattern>CYBER</pattern>
+	    <template>
+	        Processing Results... <delay>1</delay><br></br>
+	        I think CYBERSECURITY would be an excellent profession for you! Check out 
+	        the following link for more information.
+	        <button>
+	            <text>CYBERSECURITY COURSERA</text>
+	            <url>https://www.coursera.org/articles/cybersecurity-job-description</url>
+            </button>
+	    </template>
+    </category>
+    
+    <category>
+	    <pattern>QUALITY</pattern>
+	    <template>
+	        Processing Results... <delay>1</delay><br></br>
+	        I think QUALITY ASSURANCE would be an excellent profession for you! Check out 
+	        the following resource for more information.
+	        <button>
+	            <text>QUALITY ASSURANCE COURSERA</text>
+	            <url>https://www.coursera.org/articles/qa-tester</url>
+            </button>
+	    </template>
+    </category>
+    
+    <category>
+	    <pattern>DATASCIENCE</pattern>
+	    <template>
+	        Processing Results... <delay>1</delay><br></br>
+	        I think DATA SCIENCE would be an excellent profession for you! Check out 
+	        the following resource for more information.
+	        <button>
+	            <text>DATA SCIENCE COURSERA</text>
+	            <url>https://www.coursera.org/articles/what-is-a-data-scientist</url>
+            </button>
+	    </template>
+    </category>
+    
+    <category>
+	    <pattern>BACKEND</pattern>
+	    <template>
+	        Processing Results... <delay>1</delay><br></br>
+	        I think BACKEND DEVELOPMENT would be an excellent profession for you! Check out 
+	        the following resource for more information.
+	        <button>
+	            <text>BACKEND DEVELOPMENT COURSERA</text>
+	            <url>https://www.coursera.org/articles/back-end-developer</url>
+            </button>
+	    </template>
+    </category>
+    
+    <category>
+	    <pattern>FRONTEND</pattern>
+	    <template>
+	        Processing Results... <delay>1</delay><br></br>
+	        I think FRONT END DEVELOPMENT would be an excellent profession for you! Check out 
+	        the following resource for more information.
+	        <button>
+	            <text>FRONTEND DEVELOPMENT COURSERA</text>
+	            <url>https://www.coursera.org/articles/front-end-developer</url>
+            </button>
+	    </template>
+    </category>
+    
+    <category>
+	    <pattern>NETENG</pattern>
+	    <template>
+	        Processing Results... <delay>1</delay><br></br>
+	        I think NETWORK ENGINEERING would be an excellent profession for you! Check out 
+	        the following resource for more information.
+	        <button>
+	            <text>NETWORK ENGINEERING COURSERA</text>
+	            <url>https://www.coursera.org/articles/network-engineer</url>
+            </button>
+	    </template>
+    </category>
+    
+</aiml>

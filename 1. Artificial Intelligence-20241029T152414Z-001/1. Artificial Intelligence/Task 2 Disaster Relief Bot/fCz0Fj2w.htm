@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+        <title>Robot simulator CoppeliaSim: create, compose, simulate, any robot - Coppelia Robotics</title>
+        <meta content="CoppeliaSim is one of the most versatile and powerful robot simulation platform available. It is used for fast algorithm development, factory automation simulation, fast prototyping and verification, remote monitoring, safety double-checking, as digital twin, and much more." name="description">
+        <meta content="homepage, robot simulator, robot simulation, simulation, simulator, V-REP, VREP, CoppeliaSim, gazebo, webots, visual components, robotics, automation, digital twin, industry 4.0" name="keywords">
+
+        <link href="/assets/img/icons/favicon.png" rel="icon">
+        <link href="/assets/img/icons/apple-touch-icon.png" rel="apple-touch-icon">
+
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CJost:300,300i,400,400i,500,500i,600,600i,700,700i%7CPoppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" integrity="sha512-1cK78a1o+ht2JcaW6g8OXYwqpev9+6GqOkz9xmBN9iUUhIndKtxwILGWYOSibOKjLsEdjyjZvYDq/cZwNeak0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/css/boxicons.min.css" integrity="sha512-cn16Qw8mzTBKpu08X0fwhTSv02kK/FojjNLz0bwp2xJ4H+yalwzXKFw/5cLzuBZCxGWIA+95X4skzvo8STNtSg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.2.0/css/glightbox.css" integrity="sha512-iQ3H4A+iyBTP8M4ypX5PrTt2S+G1zmRjf0k0uOASKlFHysV8TL9ZoQyVwPss0D12IBTMoDEHA8+bg8a1viS9Mg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.1.0/remixicon.min.css" integrity="sha512-i5VzKip7owqOGjb0YTF8MR2J9yBVO3FLHeazKzLp354XYTmKcqEU3UeFYUw82R8tV6JqxeATOfstCfpfPhbyEA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css" integrity="sha512-rd0qOHVMOcez6pLWPVFIv7EfSdGKLt+eafXh4RO/12Fgr41hDQxfGvoi1Vy55QIVcQEujUE1LQrATCLl2Fs+ag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <link href="/assets/css/style.css" rel="stylesheet">
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-EV13Z5YT5N"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-EV13Z5YT5N');
+        </script>
+        <!-- End Google tag (gtag.js) -->
+
+    </head>
+
+    <body>
+        <header id="header" class="fixed-top">
+            <div class="container d-flex align-items-center">
+
+                <a href="#" class="logo me-auto"><img src="/assets/img/coppelia-robotics.svg" alt="Coppelia Robotics" class="img-fluid p-1"></a>
+
+                <nav id="navbar" class="navbar">
+                    <ul>
+                        <li><a class="nav-link scrollto" href="#coppeliasim">CoppeliaSim</a></li>
+                        <!--
+                        <li class="dropdown">
+                            <a href="#"><span>Resources</span> <i class="bi bi-chevron-down"></i></a>
+                            <ul>
+                                <li><a href="#">Licensing info</a></li>
+                                <li class="dropdown"><a href="#"><span>Research</span> <i class="bi bi-chevron-right"></i></a>
+                                    <ul>
+                                        <li><a href="#">Last Published Paper</a></li>
+                                        <li><a href="#">Papers Citing CoppeliaSim</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">Forum</a></li>
+                            </ul>
+                        </li>
+                        -->
+                        <li><a class="nav-link scrollto" href="#services">Services</a></li>
+                        <li><a class="nav-link scrollto" href="#solutions">Solutions</a></li>
+                        <li><a class="nav-download-link scrollto" href="#download">Download</a></li>
+                        <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                    </ul>
+                    <i class="bi bi-list mobile-nav-toggle"></i>
+                </nav>
+            </div>
+        </header>
+
+<section id="hero__" class="d-none align-items-center">
+    <div class="container">
+        <div class="row" >
+            <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+                <h1>Accelerate your R&amp;D with Next-Gen Automation and Robotics Prototyping</h1>
+                <h2><img src="assets/img/coppeliaSim.svg" style="height: 2.35rem;" alt="CoppeliaSim" /> supports you in testing and validating complex robotics systems via algorithms prototyping, kinematic design and digital twin creation.</h2>
+                <div class="d-flex justify-content-center justify-content-lg-start">
+                    <a href="#coppeliasim" class="btn-get-started scrollto">Learn more</a>
+                    <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+                </div>
+            </div>
+            <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+                <img src="assets/img/illustrations/hero.svg" class="img-fluid animated w-100" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="hero" class="d-block p-0">
+    <div id="hero-background" class="d-none">
+        <img src="assets/img/illustrations/hero.svg" class="img-fluid animated w-100" alt="">
+    </div>
+
+    <video id="hero-video" autoplay loop muted poster="assets/img/illustrations/hero.svg" preload="none">
+        <source src="assets/video/hero.mp4" type="video/mp4">
+        <source src="assets/video/hero.webm" type="video/webm">
+    </video>
+
+    <div id="hero-gradient-overlay"></div>
+
+    <div class="row h-100" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; z-index: 5;">
+        <div class="col-lg-6 d-flex flex-column justify-content-lg-end justify-content-center p-5 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+            <h1>Accelerate your R&amp;D with Next-Gen Automation and Robotics Prototyping</h1>
+            <h2><img src="assets/img/coppeliaSim.svg" style="height: 2.35rem;" alt="CoppeliaSim" /> supports you in testing and validating complex robotics systems via algorithms prototyping, kinematic design and digital twin creation.</h2>
+            <div class="d-flex justify-content-center justify-content-lg-start">
+                <a href="#coppeliasim" class="btn-get-started scrollto">Learn more</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <main id="main">
+<section id="coppeliasim" class="about">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>Create. Compose. Simulate. Any robot.</h2>
+        </div>
+
+        <div class="row content">
+            <div class="col-lg-6">
+                <p>
+                The robotics simulator CoppeliaSim is based on a distributed control architecture; each object/model can be individually controlled via:
+                </p>
+                <ul>
+                    <li><i class="ri-check-double-line"></i> an embedded script (Python or Lua)</li>
+                    <li><i class="ri-check-double-line"></i> a plugin (C, C++)</li>
+                    <li><i class="ri-check-double-line"></i> a remote API client (Python, Lua, Java, MATLAB, Octave, C, C++, Rust)</li>
+                    <li><i class="ri-check-double-line"></i> a custom solution.</li>
+                </ul>
+            </div>
+            <div class="col-lg-6 pt-4 pt-lg-0">
+                <p>
+                CoppeliaSim is used for fast algorithm development, factory automation simulations, fast prototyping and verification, robotics related education, remote monitoring, safety double-checking, as digital twin, and much more.
+                </p>
+                <a href="#features" class="btn-learn-more scrollto">Learn More</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section id="features" class="features section-bg">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>Features</h2>
+        </div>
+
+        <div class="row" style="position: relative">
+            <div style="display: inline-block; padding: 0; position: absolute; left: -40px; top: 50%; width: 40px; height: 40px; font-size: 40px;">
+                <a href="#" onclick="$('#features .feature').toggleClass('d-flex d-none'); return false;"><i class="bx bx-chevron-left"></i></a>
+            </div>
+
+            <div style="display: inline-block; padding: 0; position: absolute; right: -40px; top: 50%; width: 40px; height: 40px; font-size: 40px;">
+                <a href="#" onclick="$('#features .feature').toggleClass('d-flex d-none'); return false;"><i class="bx bx-chevron-right"></i></a>
+            </div>
+
+            <div class="feature feature-group-1 col-xl-3 col-md-6 d-flex" data-aos="zoom-in" data-aos-delay="100">
+                <div class="icon-box">
+                    <div class="icon-box-header">
+                        <img src="assets/img/illustrations/engines.svg" alt="" />
+                    </div>
+                    <h4><a href="">Multiple Dynamic Engines</a></h4>
+                    <p>5 physics engines (MuJoCo, Bullet Physics, ODE, Newton and Vortex Dynamics) for fast and customizable dynamics calculations, to simulate real-world physics and object interactions (collision response, grasping, soft bodies, strings, ropes, cloths, etc.).</p>
+                </div>
+            </div>
+
+            <div class="feature feature-group-1 col-xl-3 col-md-6 mt-4 mt-md-0 d-flex" data-aos="zoom-in" data-aos-delay="200">
+                <div class="icon-box">
+                    <div class="icon-box-header">
+                        <img src="assets/img/illustrations/robot-conveyor.svg" alt="" />
+                    </div>
+                    <h4><a href="">Forward / Inverse Kinematics</a></h4>
+                    <p>Forward/Inverse kinematics calculations for any type of mechanism (branched, closed, redundant, containing nested loops, etc.). An embeddable version of the IK/FK algorithms is available.</p>
+                </div>
+            </div>
+
+            <div class="feature feature-group-1 col-xl-3 col-md-6 mt-4 mt-xl-0 d-flex" data-aos="zoom-in" data-aos-delay="300">
+                <div class="icon-box">
+                    <div class="icon-box-header">
+                        <img src="assets/img/illustrations/mobile-robot-sensor.svg" alt="" />
+                    </div>
+                    <h4><a href="">Sensor simulation</a></h4>
+                    <p>Powerful, realistic and exact volumetric proximity sensor simulation: performs an exact minimum distance calculation within a customizable detection volume. Operates on meshes, octrees and point clouds. Simulation of vision sensors with many image processing options, fully customizable and extendable (e.g. via plugin).</p>
+                </div>
+            </div>
+
+            <div class="feature feature-group-1 col-xl-3 col-md-6 mt-4 mt-xl-0 d-flex" data-aos="zoom-in" data-aos-delay="400">
+                <div class="icon-box">
+                    <div class="icon-box-header">
+                        <img src="assets/img/illustrations/mobile-humanoid.svg" alt="" />
+                    </div>
+                    <h4><a href="">Path and Motion Planning</a></h4>
+                    <p>Path planning / motion planning is supported in a very flexible way via the OMPL library wrapped in a plugin for CoppeliaSim.</p>
+                </div>
+            </div>
+
+            <div class="feature feature-group-2 col-xl-3 col-md-6 d-none" data-aos="zoom-in" data-aos-delay="100">
+                <div class="icon-box">
+                    <div class="icon-box-header">
+                        <img src="assets/img/illustrations/server-laptop.svg" alt="" />
+                    </div>
+                    <h4><a href="">Powerful APIs</a></h4>
+                    <p>5 Programming Approaches, 7 Languages.</p>
+                    <p>Powerful API: Python, Lua, C/C++, Java, JavaScript, <a href="https://www.mathworks.com/products/matlab.html" target="_blank">MATLAB <i class="bx bx-link-external"></i></a>, Octave.</p>
+                    <p>ROS interfaces: publishers, subscribers &amp; service calls.</p>
+                    <p>ZeroMQ messaging, WebSockets, and more.</p>
+                </div>
+            </div>
+
+            <div class="feature feature-group-2 col-xl-3 col-md-6 mt-4 mt-md-0 d-none" data-aos="zoom-in" data-aos-delay="200">
+                <div class="icon-box">
+                    <div class="icon-box-header">
+                        <img src="assets/img/illustrations/distance-calc.svg" alt="" />
+                    </div>
+                    <h4><a href="">Collision &amp; Distance Calculation</a></h4>
+                    <p>Fast collision checking between any mesh, octree, point cloud, or collection of those.</p>
+                    <p>Fast and exact minimum distance calculation between any mesh (convex, concave, open, closed), octree, point cloud, or collection of those.</p>
+                </div>
+            </div>
+
+            <div class="feature feature-group-2 col-xl-3 col-md-6 mt-4 mt-xl-0 d-none" data-aos="zoom-in" data-aos-delay="300">
+                <div class="icon-box">
+                    <div class="icon-box-header">
+                        <img src="assets/img/illustrations/plugins.svg" alt="" />
+                    </div>
+                    <h4><a href="">Vast collection of plugins and add-ons</a></h4>
+                    <p>Plugins for trajectory generation, custom user interfaces, computer vision, computational geometry, importing and exporting to many formats, and more!</p>
+                </div>
+            </div>
+
+            <div class="feature feature-group-2 col-xl-3 col-md-6 mt-4 mt-xl-0 d-none" data-aos="zoom-in" data-aos-delay="400">
+                <div class="icon-box">
+                    <div class="icon-box-header">
+                        <img src="assets/img/illustrations/computer-with-robot.svg" alt="" />
+                    </div>
+                    <h4><a href="">Many More Features</a></h4>
+                    <p>Browser-based viewer, multilevel undo/redo, movie recorder, simulation of paint or welding seams, OC trees, point clouds.</p>
+                    <p>For a complete description of all the CoppeliaSim features please refer to the <a href="//manual.coppeliarobotics.com">User manual</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="text-center" data-aos="zoom-in" data-aos-delay="500">
+                <p>For a complete description of all the CoppeliaSim features please refer to the <a href="//manual.coppeliarobotics.com">User manual</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="services" class="cta">
+    <div class="container" data-aos="zoom-in">
+
+        <div class="row">
+            <div class="col-lg-9 text-center text-lg-start">
+                <i class="bx bxs-cog" style="float: left; font-size: 150px; margin-top: -30px; margin-right: 2rem; color: #fff;"></i>
+                <h3>Customized Solutions &amp; Training</h3>
+                <p>At Coppelia Robotics we offer customized solutions for all your needs, including model creation and specialized plugins development. We can do personalized training sessions for you and your team.</p>
+            </div>
+            <div class="col-lg-3 cta-btn-container text-center">
+                <a class="cta-btn align-middle scrollto" href="#contact">Contact Us</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section id="services-clients" class="clients section-bg">
+    <div class="container">
+        <div class="row text-secondary small">
+            Some of our customers:
+        </div>
+
+        <div class="row">
+
+            <div class="client col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                <img src="assets/img/clients/kuka.svg" class="img-fluid" alt="">
+            </div>
+
+            <div class="client col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                <img src="assets/img/clients/airbus.svg" class="img-fluid" alt="">
+            </div>
+
+            <div class="client col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                <img src="assets/img/clients/intel.svg" class="img-fluid" alt="">
+            </div>
+
+            <div class="client col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                <img src="assets/img/clients/honda.svg" class="img-fluid" alt="">
+            </div>
+
+            <div class="client col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                <img src="assets/img/clients/kyocera.svg" class="img-fluid" alt="">
+            </div>
+
+            <div class="client col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                <img src="assets/img/clients/esa.svg" class="img-fluid" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="solutions" class="videos">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>Videos</h2>
+        </div>
+
+
+        <div class="row videos-container" data-aos="fade-up" data-aos-delay="200">
+        <div class="col-lg-4 col-md-6 videos-item">
+            <div class="videos-img">
+                <a href="https://www.youtube.com/watch?v=18P7azRsJY0" class="glightbox">
+                    <img src="https://img.youtube.com/vi/18P7azRsJY0/hqdefault.jpg" class="img-fluid" alt="">
+                    <i class="bx bx-play"></i>
+                </a>
+            </div>
+            <div class="videos-info">
+                <h4>Enhanced Python integration in CoppeliaSim</h4>
+                <p>The latest iteration of CoppeliaSim boasts significant enhancements in Python support, unlocking the full potential of Python's functions and packages within the simulation environment: ✅ Python Script Integration: Effortlessly connect to CoppeliaSim from any Python script, whether it's running locally or hosted remotely. ✅ Direct Library Access: Incorporate the CoppeliaSim library seamlessly into your Python scripts and leverage its comprehensive suite of functions. ✅ Python Script Scheduling: CoppeliaSim now efficiently schedules, initiates, and executes multiple embedded Python scripts, optimizing your simulation workflow.</p>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 videos-item">
+            <div class="videos-img">
+                <a href="https://www.youtube.com/watch?v=mYyZoL44jvM" class="glightbox">
+                    <img src="https://img.youtube.com/vi/mYyZoL44jvM/hqdefault.jpg" class="img-fluid" alt="">
+                    <i class="bx bx-play"></i>
+                </a>
+            </div>
+            <div class="videos-info">
+                <h4>Morphing a Simulation Model into its Convex or Convex-Decomposed Representation</h4>
+                <p>This video shows how a CoppeliaSim simulation model can easily be transformed into an efficient convex or convex-decomposed representation. Convex and convex-decomposed meshes are handled in a much more efficient way by physics engines.</p>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 videos-item">
+            <div class="videos-img">
+                <a href="https://www.youtube.com/watch?v=Hsp2MiuOdEI" class="glightbox">
+                    <img src="https://img.youtube.com/vi/Hsp2MiuOdEI/hqdefault.jpg" class="img-fluid" alt="">
+                    <i class="bx bx-play"></i>
+                </a>
+            </div>
+            <div class="videos-info">
+                <h4>Collaborative Inverse Kinematics Task in CoppeliaSim</h4>
+                <p>This video shows how two (or more) robots can perform a complex inverse kinematics task, collaboratively, i.e. where the two tasks are inter-dependent). CoppeliaSim offers a powerful kinematics calculation module, that supports IK and FK also for branched/looped mechanisms, Jacobian visualization and callbacks, null space projection support, various constraints and solvers, joint dependencies, etc.</p>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 videos-item">
+            <div class="videos-img">
+                <a href="https://www.youtube.com/watch?v=uCMjjNrZjuU" class="glightbox">
+                    <img src="https://img.youtube.com/vi/uCMjjNrZjuU/hqdefault.jpg" class="img-fluid" alt="">
+                    <i class="bx bx-play"></i>
+                </a>
+            </div>
+            <div class="videos-info">
+                <h4>Debugging Kinematics in CoppeliaSim</h4>
+                <p>This video shows how a kinematics task (forward or inverse kinematics) can visually be debugged in CoppeliaSim. An overlay drawing indicates the state of the kinematic world, while the corresponding Jacobians are displayed in dialogs.</p>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 videos-item">
+            <div class="videos-img">
+                <a href="https://www.youtube.com/watch?v=Y0c35pk7T9M" class="glightbox">
+                    <img src="https://img.youtube.com/vi/Y0c35pk7T9M/hqdefault.jpg" class="img-fluid" alt="">
+                    <i class="bx bx-play"></i>
+                </a>
+            </div>
+            <div class="videos-info">
+                <h4>5 Physics Engines in CoppeliaSim</h4>
+                <p>This video shows a visual comparison between the 5 physics engines supported in CoppeliaSim: MuJoCo, Bullet, ODE, Vortex and Newton.</p>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 videos-item">
+            <div class="videos-img">
+                <a href="https://www.youtube.com/watch?v=MX3VXvZFk0U" class="glightbox">
+                    <img src="https://img.youtube.com/vi/MX3VXvZFk0U/hqdefault.jpg" class="img-fluid" alt="">
+                    <i class="bx bx-play"></i>
+                </a>
+            </div>
+            <div class="videos-info">
+                <h4>Smart content &amp; digital twins</h4>
+                <p>CoppeliaSim can be used for quick application set-up, e.g. for simulation and/or configuration and monitoring of real hardware, and in general for digital twin applications.</p>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function download(form, event)
+{
+    event.preventDefault();
+    gtag('event', 'download', {'event_category': 'File Download', 'file_url': form.action});
+    setTimeout(() => {
+        window.location.href = form.platform.value;
+    }, 1000);
+    return false;
+}
+</script>
+
+<div class="modal fade" id="modalDownloadCoppeliaSimPlayer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelPlayer" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="/download" method="get" onsubmit="return download(this, event);">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabelPlayer">Download CoppeliaSim Player</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="assets/img/coppeliaSim.svg" class="p-4 w-100" alt="CoppeliaSim logo" />
+                    <h6>Choose your platform:</h6>
+                    <select name="platform" id="downloadCoppeliaSimPlayerPlatformSelect" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                        <option value="https://downloads.coppeliarobotics.com/V4_6_0_rev18/CoppeliaSim_Player_V4_6_0_rev18_Setup.exe">Windows (installer package) [x86_64]</option>
+                        <option value="https://downloads.coppeliarobotics.com/V4_6_0_rev18/CoppeliaSim_Player_V4_6_0_rev18_Win.zip">Windows (zip package without installer) [x86_64]</option>
+                        <option value="https://downloads.coppeliarobotics.com/V4_6_0_rev18/CoppeliaSim_Player_V4_6_0_rev18_macOS13_x86_64.zip">macOS 13+ Intel [x86_64]</option>
+                        <option value="https://downloads.coppeliarobotics.com/V4_6_0_rev18/CoppeliaSim_Player_V4_6_0_rev18_macOS13_arm64.zip">macOS 13+ Apple Silicon [arm64]</option>
+                        <option value="https://downloads.coppeliarobotics.com/V4_6_0_rev18/CoppeliaSim_Player_V4_6_0_rev18_Ubuntu20_04.tar.xz">Ubuntu 20.04 [x86_64]</option>
+                        <option value="https://downloads.coppeliarobotics.com/V4_6_0_rev18/CoppeliaSim_Player_V4_6_0_rev18_Ubuntu22_04.tar.xz">Ubuntu 22.04 [x86_64]</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnDownloadCoppeliaSimPlayer" type="submit" class="btn btn-danger">Download</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalDownloadCoppeliaSimPro" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelPro" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="/download" method="get" onsubmit="return download(this, event);">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabelPro">Download CoppeliaSim Pro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="assets/img/coppeliaSim.svg" class="p-4 w-100" alt="CoppeliaSim logo" />
+                    <h6>Choose your platform:</h6>
+                    <select name="platform" id="downloadCoppeliaSimProPlatformSelect" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                        <option value="https://downloads.coppeliarobotics.com/V4_6_0_rev18/CoppeliaSim_Pro_V4_6_0_rev18_Setup.exe">Windows (installer package) [x86_64]</option>
+                        <option value="https://downloads.coppeliarobotics.com/V4_6_0_rev18/CoppeliaSim_Pro_V4_6_0_rev18_Win.zip">Windows (zip package without installer) [x86_64]</option>
+                        <option value="https://downloads.coppeliarobotics.com/V4_6_0_rev18/CoppeliaSim_Pro_V4_6_0_rev18_macOS13_x86_64.zip">macOS 13+ Intel [x86_64]</option>
+                        <option value="https://downloads.coppeliarobotics.com/V4_6_0_rev18/CoppeliaSim_Pro_V4_6_0_rev18_macOS13_arm64.zip">macOS 13+ Apple Silicon [arm64]</option>
+                        <option value="https://downloads.coppeliarobotics.com/V4_6_0_rev18/CoppeliaSim_Pro_V4_6_0_rev18_Ubuntu20_04.tar.xz">Ubuntu 20.04 [x86_64]</option>
+                        <option value="https://downloads.coppeliarobotics.com/V4_6_0_rev18/CoppeliaSim_Pro_V4_6_0_rev18_Ubuntu22_04.tar.xz">Ubuntu 22.04 [x86_64]</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnDownloadCoppeliaSimPro" type="submit" class="btn btn-danger">Download</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalDownloadCoppeliaSimEdu" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelEdu" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="/download" method="get" onsubmit="return download(this, event);">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabelEdu">Download CoppeliaSim Edu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="assets/img/coppeliaSim.svg" class="p-4 w-100" alt="CoppeliaSim logo" />
+                    <div class="alert alert-warning small">
+                        <ul class="m-0">
+                            <li>CoppeliaSim Edu is exclusively available for use by students, teachers and professors of schools and universities.</li>
+                            <li>CoppeliaSim Edu cannot be used by companies, research institutions, non-profit organisations, foundations, or any other entity which is not school or university.</li>
+                            <li>CoppeliaSim Edu cannot be used commercially.</li>
+                        </ul>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="agreeCheck" onchange="document.getElementById('btnDownloadCoppeliaSimEdu').classList.toggle('disabled');">
+                        <label class="form-check-label" for="agreeCheck">I have understood and agree with the above terms.</label>
+                    </div>
+                    <hr/>
+                    <h6>Choose your platform:</h6>
+                    <select name="platform" id="downloadCoppeliaSimEduPlatformSelect" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                        <option value="https://downloads.coppeliarobotics.com/V4_6_0_rev18/CoppeliaSim_Edu_V4_6_0_rev18_Setup.exe">Windows (installer package) [x86_64]</option>
+                        <option value="https://downloads.coppeliarobotics.com/V4_6_0_rev18/CoppeliaSim_Edu_V4_6_0_rev18_Win.zip">Windows (zip package without installer) [x86_64]</option>
+                        <option value="https://downloads.coppeliarobotics.com/V4_6_0_rev18/CoppeliaSim_Edu_V4_6_0_rev18_macOS13_x86_64.zip">macOS 13+ Intel [x86_64]</option>
+                        <option value="https://downloads.coppeliarobotics.com/V4_6_0_rev18/CoppeliaSim_Edu_V4_6_0_rev18_macOS13_arm64.zip">macOS 13+ Apple Silicon [arm64]</option>
+                        <option value="https://downloads.coppeliarobotics.com/V4_6_0_rev18/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu20_04.tar.xz">Ubuntu 20.04 [x86_64]</option>
+                        <option value="https://downloads.coppeliarobotics.com/V4_6_0_rev18/CoppeliaSim_Edu_V4_6_0_rev18_Ubuntu22_04.tar.xz">Ubuntu 22.04 [x86_64]</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnDownloadCoppeliaSimEdu" type="submit" class="btn btn-danger disabled">Download</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<section id="download" class="download section-bg">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title pb-0">
+            <h2>Download</h2>
+            <p>Latest version: V4.6.0 rev18 - view <a href="//manual.coppeliarobotics.com/en/versionInfo.htm">Changelog</a></p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="box">
+                    <h3 class="mb-1">CoppeliaSim</h3>
+                    <!-- <h4 class="flavor">player</h4> -->
+                    <img alt="Player" class="flavor" src="assets/img/flavor-player.svg" />
+                    <h4 class="mb-1"><span>&nbsp;</span></h4>
+                    <ul>
+                        <li><i class="bx bx-check"></i> Full simulation functionality</li>
+                        <li class="na"><i class="bx bx-x"></i> <span>Full editing capabilities</span></li>
+                        <li><i class="bx bx-check"></i> Commercial usage</li>
+                        <li class="mt-2">&nbsp;</li>
+                    </ul>
+                    <a href="#" class="download-btn" data-bs-toggle="modal" data-bs-target="#modalDownloadCoppeliaSimPlayer"><i class="bx bx-download"></i> Download</a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
+                <div class="box featured">
+                    <h3 class="mb-1">CoppeliaSim</h3>
+                    <!-- <h4 class="flavor">pro</h4> -->
+                    <img alt="Pro" class="flavor" src="assets/img/flavor-pro.svg" />
+                    <h4 class="mb-1"><span>&nbsp;</span></h4>
+                    <ul>
+                        <li><i class="bx bx-check"></i> Full simulation functionality</li>
+                        <li><i class="bx bx-check"></i> Full editing capabilities</li>
+                        <li><i class="bx bx-check"></i> Commercial usage</li>
+                        <li class="na mt-2">Contact us for pricing</li>
+                    </ul>
+                    <a href="#" class="download-btn" data-bs-toggle="modal" data-bs-target="#modalDownloadCoppeliaSimPro"><i class="bx bx-download"></i> Download</a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="200">
+                <div class="box">
+                    <h3 class="mb-1">CoppeliaSim</h3>
+                    <!-- <h4 class="flavor">edu</h4> -->
+                    <img alt="Edu" class="flavor" src="assets/img/flavor-edu.svg" />
+                    <ul>
+                        <li class="red"><i class="bx bx-error"></i> Educational only</li>
+                        <li><i class="bx bx-check"></i> Full simulation functionality</li>
+                        <li><i class="bx bx-check"></i> Full editing capabilities</li>
+                        <li class="na"><i class="bx bx-x"></i> <span>Commercial usage</span></li>
+                        <li class="mt-2">&nbsp;</li>
+                    </ul>
+                    <a href="#" class="download-btn" data-bs-toggle="modal" data-bs-target="#modalDownloadCoppeliaSimEdu"><i class="bx bx-download"></i> Download</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="testimonials" class="testimonials">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>Testimonials</h2>
+            <p>What users say about CoppeliaSim:</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="100">
+                <div class="testimonial-item d-flex align-items-start">
+                    <i class="bx bx-message-dots"></i>
+                    <div class="testimonial-item-info">
+                        <span>Dr. Guenter S., Kuka</span>
+                        <p>"I am very convinced of your toolkit CoppeliaSim as a Product Owner. I consider CoppeliaSim to be one of the most attractive simulation and engineering platforms"</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="200">
+                <div class="testimonial-item d-flex align-items-start">
+                    <i class="bx bx-message-dots"></i>
+                    <div class="testimonial-item-info">
+                        <span>Torsten K., former Google</span>
+                        <p>"... and really believe that CoppeliaSim will have an impact, because there is nothing comparable out there"</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="300">
+                <div class="testimonial-item d-flex align-items-start">
+                    <i class="bx bx-message-dots"></i>
+                    <div class="testimonial-item-info">
+                        <span>Preben H., Blue Workforce</span>
+                        <p>"I am testing you simulation tool in complex industrial automation and it has proven very capable... it has been an essential tool for the research and ideation process. It allowed us to prototype and study kinematics dynamics singularity workspace etc far better then any real prototype could"</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="400">
+                <div class="testimonial-item d-flex align-items-start">
+                    <i class="bx bx-message-dots"></i>
+                    <div class="testimonial-item-info">
+                        <span>Ulrich S., Kuka</span>
+                        <p>"I'm very pleased with CoppeliaSim! It's exactly what we need for our project. It's easy to understand and completly configurable, awesome!"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="faq" class="faq section-bg">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-list">
+            <ul>
+                <li data-aos="fade-up" data-aos-delay="100">
+                    <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-4" class="faq-title collapsed">How do I purchase CoppeliaSim? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                    <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
+                        <p>
+                        Please <a href="#contact">contact us</a>.
+                        </p>
+                    </div>
+                </li>
+
+                <li data-aos="fade-up" data-aos-delay="200">
+                    <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" class="faq-title collapsed" data-bs-target="#faq-list-1">I have a technical question related to CoppeliaSim. Who can help me? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                    <div id="faq-list-1" class="collapse" data-bs-parent=".faq-list">
+                        <p>
+                        If you are a customer you may <a href="#contact">contact us</a> directly for email support. Otherwise, use the <a href="//forum.coppeliarobotics.com"><i class='bx bx-link-external'></i> CoppeliaSim forum</a>.
+                        </p>
+                    </div>
+                </li>
+
+                <li data-aos="fade-up" data-aos-delay="300">
+                    <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-2" class="faq-title collapsed">How do I cite CoppeliaSim in research? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                    <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
+                        <p>
+                        Cite our article from 2013: <em>CoppeliaSim (formerly V-REP): a Versatile and Scalable Robot Simulation Framework, IROS 2013</em>.
+                        </p>
+                        <p class="mb-4">
+                            Please use one of the following:
+                        </p>
+                        <h5>BibTex:</h5>
+                        <pre><code>@inproceedings{coppeliaSim,
+author="E. Rohmer and S. P. N. Singh and M. Freese",
+title="CoppeliaSim (formerly V-REP): a Versatile and
+Scalable Robot Simulation Framework",
+booktitle="Proc. of The International Conference on
+Intelligent Robots and Systems (IROS)",
+year="2013"
+note="www.coppeliarobotics.com"
+}</code></pre>
+                        <h5>BibItem:</h5>
+                        <pre><code>\bibitem{coppeliaSim} E. Rohmer, S. P. N. Singh, M. Freese,
+"CoppeliaSim (formerly V-REP): a Versatile and Scalable
+Robot Simulation Framework",
+IEEE/RSJ Int. Conf. on Intelligent Robots and Systems,
+2013. www.coppeliarobotics.com</code></pre>
+                    </div>
+                </li>
+
+                <li data-aos="fade-up" data-aos-delay="400">
+                    <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-3" class="faq-title collapsed">How is CoppeliaSim related to V-REP? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                    <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
+                        <p>
+                        CoppeliaSim is 100% compatible with V-REP. It runs faster and has more features than V-REP.
+                        </p>
+                        <p>
+                        Of course will Coppelia Robotics handle V-REP support and licenses in a perfectly interchangeable manner with CoppeliaSim support and licenses.
+                        </p>
+                        <p>
+                        For our customers and users, this can be seen as a simple name change or rebranding.
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="contact">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>Contact Us</h2>
+            <p>For general inquiries and pricing, you can use the contact form below:</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2 d-flex align-items-stretch">
+            </div>
+
+            <div class="col-lg-8 mt-5 mt-lg-0 d-flex align-items-stretch">
+                <form id="contactForm" action="/sendmail" method="post" class="email-form">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="name">Your Name</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text h-100"><i class="bx bx-user"></i></span>
+                                </div>
+                                <input type="text" name="name" class="form-control" id="name" required>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="email">Your Email</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text h-100"><i class="bx bx-envelope"></i></span>
+                                </div>
+                                <input type="email" class="form-control" name="email" id="email" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea class="form-control" name="message" id="message" rows="10" required></textarea>
+                    </div>
+                    <div class="my-3">
+                        <div class="loading">Loading</div>
+                        <div class="error-message"></div>
+                        <div class="sent-message">Your message has been sent. Thank you!<br />You should also have received a confirmation to your email.</div>
+                    </div>
+                    <div class="row">
+                        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                        <div class="col-md-8">
+                            <div class="g-recaptcha" data-sitekey="6Ldn9CcpAAAAAKd01Tdm-RwVYfYT3Nx1Z0VcIOG5"></div>
+                            <input class="form-control d-none" data-recaptcha="true">
+                        </div>
+                        <div class="col-md-4 pt-4 pt-md-0">
+                            <div class="text-center"><button type="submit">Send Message</button></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row text-center mt-5">
+                <p>For technical questions, please use the <a href="https://forum.coppeliarobotics.com/"><i class='bx bx-link-external'></i> CoppeliaSim forum</a>.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    window.addEventListener('load', () => {
+        $('#contactForm').on('submit', function(e) {
+            e.preventDefault();
+            var form = $(this);
+            form.find('.sent-message').hide();
+            form.find('.error-message').hide();
+            form.find('.loading').show();
+            $.ajax({
+                type: 'POST',
+                url: form.attr('action'),
+                data: {
+                    name: $('#name').val(),
+                    email: $('#email').val(),
+                    message: $('#message').val(),
+                    'g-recaptcha-response': $('#g-recaptcha-response').val(),
+                },
+                success: function(response) {
+                    form.find('.loading').hide();
+                    if(response.status == 'success') {
+                        form.find('.sent-message').show();
+                        //form.trigger('reset');
+                    } else {
+                        form.find('.error-message').text(response.message || 'Unknown error.');
+                        form.find('.error-message').show();
+                    }
+                },
+                error: function() {
+                    form.find('.loading').hide();
+                    form.find('.error-message').text('Failed to send message: network error.');
+                    form.find('.error-message').show();
+                }
+            });
+        });
+
+        /*
+        $('#subscribeForm').on('submit', function(e) {
+            e.preventDefault();
+            var form = $(this);
+            form.find('.loading').show();
+            $.ajax({
+                type: 'POST',
+                url: form.attr('action'),
+                data: {
+                    email: $('#subscribeEmail').val(),
+                },
+                success: function(response) {
+                    form.find('.loading').hide();
+                    form.find('.sent-message').show();
+                    form.trigger('reset');
+                },
+                error: function() {
+                    form.find('.loading').hide();
+                    form.find('.error-message').text('Failed request: network error.');
+                    form.find('.error-message').show();
+                }
+            });
+        });
+        */
+    });
+
+    window.addEventListener('load', () => {
+        const $recaptcha = document.querySelector('#g-recaptcha-response');
+        if($recaptcha) $recaptcha.setAttribute('required', 'required');
+    })
+</script>
+        </main>
+
+        <footer id="footer">
+            <div class="d-none footer-newsletter">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6 subscribe-form">
+                            <h4>Join Our Newsletter</h4>
+                            <p>Enter your email to get a notification when a major version of CoppeliaSim is released:</p>
+                            <form id="subscribeForm" action="/subscribe" method="post" class="">
+                                <div class="subscribe-form-wrapper">
+                                    <input type="email" name="email" id="subscribeEmail"><input type="submit" value="Subscribe">
+                                </div>
+                                <div class="my-3">
+                                    <div class="loading">Loading</div>
+                                    <div class="error-message"></div>
+                                    <div class="sent-message">Your have been subscribed. Thank you!</div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-6 footer-contact">
+                            <h3 class="nobr">Coppelia Robotics AG</h3>
+                            <p>
+                                8049 Zurich<br>
+                                Switzerland<br><br>
+                                <span id="jfdhsmgvci8s7c4v5e6vcise548u7c"></span><br>
+                            </p>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 footer-links">
+                            <h4>CoppeliaSim Resources</h4>
+                            <ul>
+                                <li><i class="bx bx-chevron-right"></i> <a href="//manual.coppeliarobotics.com">User Manual</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="//manual.coppeliarobotics.com/en/versionInfo.htm">Changelog</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="/previousVersions">Download previous versions</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="/coppeliaSimSpecifications.pdf">Specification sheet</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="/research">Research (last paper, citations)</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 footer-links">
+                            <h4>Community</h4>
+                            <ul class="mb-4">
+                                <li><i class="bx bx-chevron-right"></i> <a href="//forum.coppeliarobotics.com">CoppeliaSim Forum</a></li>
+                            </ul>
+                            <h4>Our Social Networks</h4>
+                            <p>Find us on social networks:</p>
+                            <div class="social-links mt-3">
+                                <a href="https://github.com/CoppeliaRobotics" class="github" title="GitHub" data-toggle="tooltip" data-placement="bottom"><i class="bx bxl-github"></i></a>
+                                <a href="https://www.youtube.com/user/VirtualRobotPlatform" class="youtube" title="YouTube" data-toggle="tooltip" data-placement="bottom"><i class="bx bxl-youtube"></i></a>
+                                <a href="https://linkedin.com/company/v-rep" class="linkedin" title="LinkedIn" data-toggle="tooltip" data-placement="bottom"><i class="bx bxl-linkedin"></i></a>
+                                <a href="https://twitter.com/coppeliaRobotic" class="twitter" title="Twitter" data-toggle="tooltip" data-placement="bottom"><i class="bx bxl-twitter"></i></a>
+                                <a href="#" class="skype d-none" title="Skype" data-toggle="tooltip" data-placement="bottom"><i class="bx bxl-skype"></i></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="container footer-bottom clearfix">
+                <div class="copyright">
+                    &copy; Copyright <strong><span>Coppelia Robotics AG</span></strong>. All Rights Reserved.
+                </div>
+                <div class="credits">
+                    Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>.<br />
+                    Illustrations by <a href="https://www.freepik.com/author/macrovector">macrovector</a>.
+                </div>
+            </div>
+        </footer>
+
+        <div id="preloader"></div>
+
+        <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js" integrity="sha512-WW8/jxkELe2CAiE4LvQfwm1rajOS8PHasCCx+knHG0gBHt8EXxS6T6tJRTGuDQVnluuAvMxWF4j8SNFDKceLFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/dist/boxicons.min.js" integrity="sha512-VTptlAlSWKaYE3DbrmwNYTzZg1zO6CtoGxplxlHxObgfLiCcRYDBqzTUWE/0ANUmyfYR7R227ZirV/I4rQsPNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.2.0/js/glightbox.min.js" integrity="sha512-S/H9RQ6govCzeA7F9D0m8NGfsGf0/HjJEiLEfWGaMCjFzavo+DkRbYtZLSO+X6cZsIKQ6JvV/7Y9YMaYnSGnAA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha512-Zq2BOxyhvnRFXu0+WE6ojpZLOU2jdnqbrM1hmVdGzyeCa1DgM3X5Q4A/Is9xA1IkbUeDd7755dNNI/PzSf2Pew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js" integrity="sha512-Ysw1DcK1P+uYLqprEAzNQJP+J4hTx4t/3X2nbVwszao8wD+9afLjBQYjz7Uk4ADP+Er++mJoScI42ueGtQOzEA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/noframework.waypoints.min.js" integrity="sha512-fHXRw0CXruAoINU11+hgqYvY/PcsOWzmj0QmcSOtjlJcqITbPyypc8cYpidjPurWpCnlB8VKfRwx6PIpASCUkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <script src="/assets/js/main.js"></script>
+
+        <script>
+            window.addEventListener('load', () => {
+                const s = 'Fnbjm;!jogpAdpqqfmjbspcpujdt/dpn';
+                let n = 0;
+                let text = "";
+                for(var i = 0; i < s.length; i++)
+                {
+                    n = s.charCodeAt(i);
+                    if(n >= 8364) n = 128;
+                    text += String.fromCharCode(n - 1);
+                }
+                const container = document.getElementById('jfdhsmgvci8s7c4v5e6vcise548u7c');
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                const bodyStyle = window.getComputedStyle(container);
+                const containerFont = `${bodyStyle.fontSize} ${bodyStyle.fontFamily}`;
+                context.font = containerFont;
+                const metrics = context.measureText(text);
+                const textWidth = metrics.width;
+                const fontSize = parseFloat(bodyStyle.fontSize);
+                const textHeight = fontSize * 1.2;
+                const ratio = window.devicePixelRatio || 1;
+                canvas.width = textWidth * ratio;
+                canvas.height = textHeight * ratio;
+                context.scale(ratio, ratio);
+                canvas.style.transform = 'translateY(5px)';
+                context.font = containerFont;
+                context.fillStyle = 'black';
+                context.textBaseline = 'middle';
+                context.fillText(text, 0, canvas.height / 2 / ratio);
+                canvas.style.width = `${textWidth}px`;
+                canvas.style.height = `${textHeight}px`;
+                container.appendChild(canvas);
+            });
+        </script>
+
+    </body>
+</html>

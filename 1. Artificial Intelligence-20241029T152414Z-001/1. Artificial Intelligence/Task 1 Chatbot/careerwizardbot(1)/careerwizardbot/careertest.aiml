@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+    <category>
+        <pattern>HELLO</pattern>
+        <template><delay>1</delay>Greetings! I am Merlin, your friendly-neighborhood-interdimensional Career Wizard. How can I help you?
+            <button>
+                <text>View common job options</text>
+                <postback>SHOWALLCAREERS</postback>
+            </button>
+            <button>
+                <text>Find the right job for me</text>
+                <postback>TAKE TEST</postback>
+            </button>
+        </template>
+    </category>
+    
+    <category>
+        <pattern>TAKE TEST</pattern>
+        <template><delay>1</delay>GLORIOUS. Your curiosity will soon be rewarded. After all, knowledge is power!<br></br> Let's see... <br></br><delay>1</delay>*DUSTY SCROLL UNFURLS* <delay>1</delay> First things first, do you like building new things from scratch?
+            <button>
+                <text>I love to!!</text>
+                <postback>YES SCRATCH</postback>
+            </button>
+            <button>
+                <text>Not really</text>
+                <postback>NO SCRATCH</postback>
+            </button>
+            
+        </template>
+    </category>
+    
+    <category>
+        <pattern>YES SCRATCH</pattern>
+        <template>
+            <delay>1</delay>I also love to craft new things--as if by magic! Next question. <delay>1</delay>Do you think of yourself as a practical, problem solver type of person??
+            <button>
+                <text>Absolutely</text>
+                <postback>YES SCRATCH YES SOLVER</postback>
+            </button>
+            <button>
+                <text>Not particularly</text>
+                <postback>YES SCRATCH NO SOLVER</postback>
+            </button>
+        </template>
+    </category>
+    
+    <category>
+        <pattern>NO SCRATCH</pattern>
+        <template>
+            <delay>1</delay>I understand. Not everyone likes to reinvent the wheel. Let's move on to the next question. <delay>1</delay>Do you think you're a good problem solver?
+            <button>
+                <text>110% Yes</text>
+                <postback>NO SCRATCH YES SOLVER</postback>
+            </button>
+            <button>
+                <text>Nope</text>
+                <postback>NO SCRATCH NO SOLVER</postback>
+            </button>
+        </template>
+    </category>
+    
+    <category>
+        <pattern>YES SCRATCH YES SOLVER</pattern>
+        <template>
+            <delay>1</delay>You like to build things AND you like to solve problems? Glorious! Would you consider yourself extroverted?
+            <button>
+                <text>Extremely</text>
+                <postback>BACKEND</postback>
+            </button>
+            <button>
+                <text>Not particularly</text>
+                <postback>NETENG</postback>
+            </button>
+        </template>
+    </category>
+    
+    <category>
+        <pattern>YES SCRATCH NO SOLVER</pattern>
+        <template>
+            <delay>1</delay>Not everyone likes to deal with problems all day! But you do like to build things from scratch. Would you consider yousrelf extroverted?
+            <button>
+                <text>Most definitely</text>
+                <postback>FRONTEND</postback>
+            </button>
+            <button>
+                <text>Not really</text>
+                <postback>BACKEND</postback>
+            </button>
+        </template>
+    </category>
+    
+    <category>
+        <pattern>NO SCRATCH YES SOLVER</pattern>
+        <template>
+            <delay>1</delay>Not everyone likes to reinvent the wheel. Nevertheless, you love to solve problems! Do you consider yourself extroverted?
+            <button>
+                <text>Sure do!</text>
+                <postback>QUALITY</postback>
+            </button>
+            <button>
+                <text>Nah</text>
+                <postback>DATASCIENCE</postback>
+            </button>
+        </template>
+    </category>
+    
+    <category>
+        <pattern>NO SCRATCH NO SOLVER</pattern>
+        <template>
+            <delay>1</delay>Not everyone likes to reinvent the wheel. And problem solving can be exhausting. Would you consider yourself to be an extroverted person?
+            <button>
+                <text>Yes</text>
+                <postback>CYBER</postback>
+            </button>
+            <button>
+                <text>No is the only word I know</text>
+                <postback>ALL NO</postback>
+            </button>
+        </template>
+    </category>
+    
+    <category>
+        <pattern>ALL NO</pattern>
+        <template>
+            <delay>1</delay>You just don't like anything at all, do you? You won't get a job with that attitude!
+        </template>
+    </category>
+    
+
+</aiml>

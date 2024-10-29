@@ -1,0 +1,797 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Pandorabots Documentation</title>
+    <link rel="stylesheet" href="/docs/assets/css/styles.css">
+    
+      <link rel="stylesheet" href="/docs/assets/tipuesearch/css/normalize.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <script src="/docs/assets/tipuesearch/tipuesearch_content.js"></script>
+      <link rel="stylesheet" href="/docs/assets/tipuesearch/css/tipuesearch.css">
+      <script src="/docs/assets/tipuesearch/tipuesearch_set.js"></script>
+      <script src="/docs/assets/tipuesearch/tipuesearch.min.js"></script>
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-49503515-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-49503515-7');
+    </script>
+  </head>
+  <body>
+    <div class="pb-docs">
+        <div class="pb-docs__content">
+
+  <h1>AIML Libraries</h1>
+
+  <h4><em>Standard libraries for performing various utilities like basic math, string, and boolean functions, and more.</em></h4>
+
+  <hr />
+
+  <h3 id="aiml-standard-library">AIML Standard Library</h3>
+
+  <p>The following are standard library AIML categories (Github repo: <a href="http://github.com/pandorabots/aiml-utilities">aimlstandardlibrary.aiml</a>). These include some math, boolean and string operations, and other basic operations that can be used for more complex AIML programming involving SRAI handling of end-user input. Some of these are base operations used by other operations.</p>
+
+  <p>In Syntax column, replace {} with actual values. See Example column for input/output result examples.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="text-align: left">Operation</th>
+        <th style="text-align: left">Syntax</th>
+        <th style="text-align: left">Description</th>
+        <th style="text-align: left">Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: left">False</td>
+        <td style="text-align: left">XFALSE {input}</td>
+        <td style="text-align: left">Returns FALSE for any input.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XFALSE true <br /> <strong>OUTPUT:</strong> FALSE  <br /> <strong>INPUT:</strong> XFALSE hello there <br /> <strong>OUTPUT:</strong> FALSE</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">True</td>
+        <td style="text-align: left">XTRUE {input}</td>
+        <td style="text-align: left">Returns TRUE for any input.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XTRUE false <br /> <strong>OUTPUT:</strong> TRUE <br />  <strong>INPUT:</strong> XTRUE hello there <br /> <strong>OUTPUT:</strong> TRUE <br /></td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Number</td>
+        <td style="text-align: left">XNUMBER {input}</td>
+        <td style="text-align: left">Returns the input if it is a number. Otherwise, it will return your bot’s UDC response. Limited to positive numbers only.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XNUMBER 3 <br /> <strong>OUTPUT:</strong> 3 <br />  <strong>INPUT:</strong> XNUMBER hello there <br /> <strong>OUTPUT:</strong> I don’t have an answer for that.</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">String</td>
+        <td style="text-align: left">XSTRING {input}</td>
+        <td style="text-align: left">Returns the input as a normalized string.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XSTRING yum@goodeats.com <br /> <strong>OUTPUT:</strong> yum at goodeats dot com <br /> <strong>INPUT:</strong> XSTRING Hello there. <br /> <strong>OUTPUT:</strong> Hello there</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">True if True</td>
+        <td style="text-align: left">XISTRUE {input}</td>
+        <td style="text-align: left">Returns TRUE if the input string is true.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XISTRUE true <br /> <strong>OUTPUT:</strong> TRUE <br /> <strong>INPUT:</strong> XISTRUE 6 <br /> <strong>OUTPUT:</strong> FALSE</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">True if False</td>
+        <td style="text-align: left">XISFALSE {input}</td>
+        <td style="text-align: left">Returns TRUE if the input string is false.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XISFALSE true <br /> <strong>OUTPUT:</strong> FALSE <br /> <strong>INPUT:</strong> XISFALSE false <br /> <strong>OUTPUT:</strong> TRUE</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">True if Number</td>
+        <td style="text-align: left">XISNUMBER {input}</td>
+        <td style="text-align: left">Returns TRUE if the input string is a number, and FALSE if it is not. Limited to positive integers only.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XISNUMBER 236 <br /> <strong>OUTPUT:</strong> TRUE <br /> <strong>INPUT:</strong> XISNUMBER telegram <br /> <strong>OUTPUT:</strong> FALSE</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Check Data Type (Number, String, Boolean)</td>
+        <td style="text-align: left">XTYPEOF {input}</td>
+        <td style="text-align: left">Returns datatypes XNUMBER, XSTRING, or XBOOL depending upon the type. Limited to positive integers only.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XTYPEOF true <br /> <strong>OUTPUT:</strong> XBOOL <br /> <strong>INPUT:</strong> XTYPEOF Now is the time <br /> <strong>OUTPUT:</strong> XSTRING <br /> <strong>INPUT:</strong> XTYPEOF 34235 <br /> <strong>OUTPUT:</strong> XNUMBER</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Addition</td>
+        <td style="text-align: left">XADD {number} XS {number}</td>
+        <td style="text-align: left">Returns sum of two numbers. Limited to positive integers only.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XADD 45 XS 132 <br /> <strong>OUTPUT:</strong> 177 <br /> <strong>INPUT:</strong> XADD 1 XS 1 <br /> <strong>OUTPUT:</strong> 2</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Subtraction</td>
+        <td style="text-align: left">XSUB {number} XS {number}</td>
+        <td style="text-align: left">Returns difference of two numbers. Limited to positive integers only. Returns 0 if result would be negative.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XSUB 67 XS 1 <br /> <strong>OUTPUT:</strong> 66 <br /> <strong>INPUT:</strong> XSUB 45 XS 132 <br /> <strong>OUTPUT:</strong> 0</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Multiplication</td>
+        <td style="text-align: left">XMUL {number} XS {number}</td>
+        <td style="text-align: left">Returns product of two numbers. Limited to positive integers only.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XMUL 3 XS 5 <br /> <strong>OUTPUT:</strong> 15 <br /> <strong>INPUT:</strong> XMUL 0 XS 5 <br /> <strong>OUTPUT:</strong> 0</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Division</td>
+        <td style="text-align: left">XDIV {number} XS {number}</td>
+        <td style="text-align: left">Returns the quotient of two numbers. Limited to positive integer values. The decimal value will be truncated (rounded down). Returns infinite if trying to divide by zero.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XDIV 11 XS 3 <br /> <strong>OUTPUT:</strong> 3 <br /> <strong>INPUT:</strong> XDIV 4 XS 0 <br /> <strong>OUTPUT:</strong> infinite</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Modulo operation</td>
+        <td style="text-align: left">XMOD {number} XS {number}</td>
+        <td style="text-align: left">Returns the remainder after division of one number by another. Limited to positive integer values.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XMOD 11 XS 3 <br /> <strong>OUTPUT:</strong> 2 <br /> <strong>INPUT:</strong> XMOD 10 xs 5 <br /> <strong>OUTPUT:</strong> 0</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Less than</td>
+        <td style="text-align: left">XLT {number} XS {number}</td>
+        <td style="text-align: left">Returns TRUE if first number is less than second number. Otherwise, returns FALSE. Limited to positive integer values.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XLT 88 xs 123 <br /> <strong>OUTPUT:</strong> TRUE <br /> <strong>INPUT:</strong> XLT 10 XS 3 <br /> <strong>OUTPUT:</strong> FALSE</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Greater than</td>
+        <td style="text-align: left">XGT {number} XS {number}</td>
+        <td style="text-align: left">Returns TRUE if first number is greater than second number. Otherwise, returns FALSE. Limited to positive integer values.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XGT 88 xs 88 <br /> <strong>OUTPUT:</strong> FALSE <br /> <strong>INPUT:</strong> XGT 10 XS 3 <br /> <strong>OUTPUT:</strong> TRUE</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Less than or Equal to</td>
+        <td style="text-align: left">XLE {number} XS {number}</td>
+        <td style="text-align: left">Returns TRUE if first number is less than or equal to second number. Otherwise, returns FALSE. Limited to positive integer values.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XLE 44 XS 44 <br /> <strong>OUTPUT:</strong> TRUE <br /> <strong>INPUT:</strong> XLE 5 XS 2 <br /> <strong>OUTPUT:</strong> FALSE</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Greater than or Equal to</td>
+        <td style="text-align: left">XGE {number} XS {number}</td>
+        <td style="text-align: left">Returns TRUE if first number is greater than or equal to second number. Otherwise, returns FALSE. Limited to positive integer values.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XGE 3 XS 3 <br /> <strong>OUTPUT:</strong>TRUE <br /> <strong>INPUT:</strong> XGE 23 XS 582 <br /> <strong>OUTPUT:</strong> FALSE</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">String Concatenation</td>
+        <td style="text-align: left">XADD {string} XS {string}</td>
+        <td style="text-align: left">Returns combination of two strings.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XADD Betty XS Boop <br /> <strong>OUTPUT:</strong> BettyBoop</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">String Equals</td>
+        <td style="text-align: left">XEQ {string} XS {string}</td>
+        <td style="text-align: left">Returns TRUE if first string is the same as second string. Otherwise, returns FALSE. Capitalization is not considered.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XEQ john XS John <br /> <strong>OUTPUT:</strong> TRUE <br />  <strong>INPUT:</strong> XEQ fish XS fishing <br /> <strong>OUTPUT:</strong> FALSE</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">String Not Equal</td>
+        <td style="text-align: left">XNE {string} XS {string}</td>
+        <td style="text-align: left">Returns TRUE if first string is not the same as second string. Otherwise, returns FALSE. Capitalization is not considered.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XNE john XS John <br /> <strong>OUTPUT:</strong> FALSE <br /> <strong>INPUT:</strong> XNE fish XS fishing <br /> <strong>OUTPUT:</strong> TRUE</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">NOT operation</td>
+        <td style="text-align: left">XNOT {input}</td>
+        <td style="text-align: left">Returns TRUE if input is false, and vice versa. If input is not boolean, returns FALSE.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XNOT true <br /> <strong>OUTPUT:</strong> FALSE <br /> <strong>INPUT:</strong> XNOT false <br /> <strong>OUTPUT:</strong> TRUE</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Count characters</td>
+        <td style="text-align: left">XLENGTH {string}</td>
+        <td style="text-align: left">Returns number of characters in the string. Note that space characters are not counted, if there are more than one word in the string.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XLENGTH hello <br /> <strong>OUTPUT:</strong> 5 <br /> <strong>INPUT:</strong> XLENGTH hello there <br /> <strong>OUTPUT:</strong> 10</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Count characters with spaces</td>
+        <td style="text-align: left">XLENGTHSPACES {string}</td>
+        <td style="text-align: left">Returns number of characters in the string. Space characters are counted in this function.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XLENGTHSPACES hello there<br /> <strong>OUTPUT:</strong> 11 <br /> <strong>INPUT:</strong> XLENGTHSPACES hello there stranger <br /> <strong>OUTPUT:</strong> 19</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Random Number</td>
+        <td style="text-align: left">XRANDOM</td>
+        <td style="text-align: left">Returns a random single digit number, 0-9 inclusive.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XRANDOM <br /> <strong>OUTPUT:</strong> 9</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Extract substring</td>
+        <td style="text-align: left">XSUBSTRING {input} XS {number}</td>
+        <td style="text-align: left">Returns a substring from the input starting after the first N characters.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XSUBSTRING rosemary XS 4 <br /> <strong>OUTPUT:</strong> mary</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Maximum Number</td>
+        <td style="text-align: left">XMAX {number} {number} … {number}</td>
+        <td style="text-align: left">Returns the maximum value from a list of numbers. Limited to positive integer numbers.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XMAX 10 3 7 2 <br /> <strong>OUTPUT:</strong>10 <br />  <strong>INPUT:</strong> XMAX 10 10 <br /> <strong>OUTPUT:</strong>10</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">First word</td>
+        <td style="text-align: left">XCAR {sentence}</td>
+        <td style="text-align: left">Returns the first word of a string. Limited to a single sentence.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XCAR How are you? <br /> <strong>OUTPUT:</strong> How</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Remaining words after first</td>
+        <td style="text-align: left">XCDR {sentence}</td>
+        <td style="text-align: left">Returns the remainder of the words after stripping out the first word. Limited to a single sentence.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XCDR How are you? <br /> <strong>OUTPUT:</strong> are you</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Concatenate strings</td>
+        <td style="text-align: left">XIMPLODE {input1} {input2} ..</td>
+        <td style="text-align: left">Returns a string with input strings combined. Limited to a single sentence.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XIMPLODE hello there stranger <br /> <strong>OUTPUT:</strong> hellotherestranger</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Reverse words</td>
+        <td style="text-align: left">XREVERSE {string}</td>
+        <td style="text-align: left">Returns a string with words in reverse order.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XREVERSE parkbench picnic <br /> <strong>OUTPUT:</strong> picnic parkbench <br /> <strong>INPUT:</strong> XREVERSE one two three <br /> <strong>OUTPUT:</strong> three two one</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">NULL</td>
+        <td style="text-align: left">XBLACKHOLE {input}</td>
+        <td style="text-align: left">Returns nothing back in bot response</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XBLACKHOLE <br /> <strong>OUTPUT:</strong></td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Output string N times</td>
+        <td style="text-align: left">XLOOP {string} XS {number}</td>
+        <td style="text-align: left">Returns string value concatenated multiple times. Note: does not work if string includes sentence splitting characters.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XLOOP bot XS 4 <br /> <strong>OUTPUT:</strong> botbotbotbot <br />  <strong>INPUT:</strong> XLOOP I like you XS 2 <br /> <strong>OUTPUT:</strong> I like youI like you</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">Word Count</td>
+        <td style="text-align: left">XCOUNT {string}</td>
+        <td style="text-align: left">Returns number of words in input string. Words are delimited by space and special characters that have been normalized.</td>
+        <td style="text-align: left"><strong>INPUT:</strong> XCOUNT now is the time <br /> <strong>OUTPUT:</strong> 4 <br /> <strong>INPUT:</strong> XCOUNT My email is cup@me.com <br /> <strong>OUTPUT:</strong> 8</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr />
+
+  <h3 id="using-rosie">Using Rosie (AKA Small Talk)</h3>
+
+  <p><em><strong>Update:</strong> We will occasionally push changes to the Rosie repository to improve the existing content. We highly suggest that you watch the project on <a href="https://github.com/pandorabots/rosie">Github</a> to keep track of future updates.</em></p>
+
+  <p><em>Unless otherwise noted, future updates to Rosie will be placed in <strong>z_update.aiml</strong>. If you are already working with a version of Rosie, you should upload only this file to your bot. This will allow you to get the updates without overwriting files you may have done custom work on.</em></p>
+
+  <p>Original platform users may be wondering where they can access pre-written AIML (like Dr. Wallace’s ALICE bot) to use as base content for their bot. We provide such open-source AIML content to save users the hassle of “reinventing the wheel”  by recreating basic functionality.</p>
+
+  <p>Enter <a href="https://github.com/pandorabots/rosie">Rosie</a>: she’s free to download, a fork of the ALICE 2.0 project, and optimized for use on the Pandorabots Platform. These files are automatically uploaded into your bot when you select the Small Talk content option. This post will show you how to start building a custom chatbot on top of the Rosie “brain.”</p>
+
+  <p>Here are the different files you’ll find in Rosie:</p>
+
+  <h2>Properties (rosie.properties)</h2>
+
+  <p>A property is a variable that is global to all users of a bot. Generally, properties are used to store information about your bot: it’s name, age, status, etc. Rosie comes with an extensive properties file that you can edit to easily customize your bot’s personality. This is a great place to get started exploring Rosie’s capabilities. Try giving the pre-existing properties some custom values, or add new properties as you see fit.</p>
+
+  <h2>Bot information (bot_profile.aiml, personality.aiml)</h2>
+
+  <p>These two files contain categories that actually implement the variables you have defined in the properties file. For example, Rosie comes preloaded with a property named “job”, and the property is integrated in a category found in bot_profile.aiml:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;&lt;pattern&gt;JOB&lt;/pattern&gt;
+&lt;template&gt;I am a full-time &lt;bot name="job"/&gt;.&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>Now, when the JOB pattern is matched, the category will give a response that contains whatever value you have assigned the “job” property in the rosie.properties file.</p>
+
+  <p>Most of the fun in bot development is not only picking out custom property values for your bot, but also customizing the templates in which these values are returned. For example, I might edit the above category to add a little more flair to my bot:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;&lt;pattern&gt;JOB&lt;/pattern&gt;
+&lt;template&gt;By day, I am a &lt;bot name="job"/&gt;. At night, I crawl the internet looking for pictures of cats wearing funny hats.&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <h2>Client information (client_profile.aiml)</h2>
+
+  <p>Pandorabots are amazing because of their uncanny ability to remember personal information about the people talking to them. These pieces of information are stored as predicate variables, which are local to the particular client. The client_profile.aiml file contains mostly categories designed to both set and recall these predicates in the course of conversation:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;&lt;pattern&gt;I AM FROM *&lt;/pattern&gt;
+&lt;template&gt;Is that where you live now?  &lt;think&gt;&lt;set name="birthplace"&gt;&lt;star/&gt;&lt;/set&gt;&lt;/think&gt;&lt;/template&gt;
+&lt;/category&gt;
+&lt;category&gt;&lt;pattern&gt;MY BIRTHPLACE&lt;/pattern&gt;
+&lt;template&gt;&lt;get name="birthplace"/&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>This is another great file to customize, by changing the existing templates, or by adding new categories that set new predicates about your user.</p>
+
+  <h2>Contextual categories (udc.aiml, that.aiml, train.aiml)</h2>
+
+  <p>The ultimate default category (UDC) is designed to give a response when your bot was unable to match the user’s input with any other category. If your bot is in its beginning stages of development, the UDC will be an indispensable tool.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;&lt;pattern&gt;*&lt;/pattern&gt;
+&lt;template&gt;I didn’t understand that!&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>You can customize this file by changing the default list elements in the UDC template, or by adding your own additional list elements.</p>
+
+  <p>The that.aiml file is included mostly as an example of what can be done with context in AIML using the <code class="language-plaintext highlighter-rouge">&lt;that&gt;</code> tag. The <code class="language-plaintext highlighter-rouge">&lt;that&gt;</code> tag is used to attach a category to the previous answer given by a bot; in other words, a category with a <code class="language-plaintext highlighter-rouge">&lt;that&gt;</code> tag can only be matched if the the previous response matches the contents of <code class="language-plaintext highlighter-rouge">&lt;that&gt;</code>. For example:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;&lt;pattern&gt;YES&lt;/pattern&gt;
+&lt;that&gt;IS IT A NICE PLACE&lt;/that&gt;
+&lt;template&gt;What do you like best about it?&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>Out of context, the input “yes” could be referring to anything. This category’s <code class="language-plaintext highlighter-rouge">&lt;that&gt;</code> tag, however, places the yes in the context of the bot’s previous response (IT IS A NICE PLACE).</p>
+
+  <p>The that.aiml file included contains a number of these useful context categories. Feel free to delete, edit, or add more context categories!</p>
+
+  <p>Finally, the train.aiml file is designed for you to easily take advantage of the AIML 2.0 <code class="language-plaintext highlighter-rouge">&lt;learn&gt;</code> tag, which allows a client to generate a new category during conversation.</p>
+
+  <h2>Environment configuration (config.aiml, rosie.pdefaults)</h2>
+
+  <p>The configuration file is designed with the application developer in mind. It allows you to set a predicate based on the environment to which the bot is being talked to (browser, mobile, screenless, etc.).</p>
+
+  <p>Think about it this way: let’s say I have a category that displays a picture of a cat when activated. What if there is no screen interface for my bot? You can use the “env” predicate in categories whose response depends on the condition of the client’s environment. Here’s an example from bot_profile.aiml:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;&lt;pattern&gt;PIC&lt;/pattern&gt;
+&lt;template&gt;
+&lt;condition name="env"&gt;
+&lt;li value="browser"&gt;My picture: &lt;bot name="picture"/&gt;&lt;/li&gt;
+&lt;li&gt;You'll have to connect me to a browser if you want to see a picture.&lt;/li&gt;
+&lt;/condition&gt;
+&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>The default value of the “env” predicate is “browser”. If the value of “env” is browser, the bot will respond with the first list item. If the “env” predicate is set to anything else, the second list item will serve as the response.</p>
+
+  <p>You can use the categories found in config.aiml to set these types of predicates. You can then write AIML categories whose response is dependent on the value of these predicates:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;&lt;pattern&gt;XSET ENV *&lt;/pattern&gt;
+&lt;template&gt;Environment is &lt;set name="env"&gt;&lt;star/&gt;&lt;/set&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <h2>Utilities (date.aiml, dialog.aiml, roman.aiml, utilities.aiml)</h2>
+
+  <p>These files are all tools and utilities that allow your bot to perform various functions. The date.aiml file, for example, allows you to type SEASON and receive the current season (based on the current date).</p>
+
+  <p>The AIML found is these files is very useful for any bot developer. You shouldn’t have to modify these files, but if you do, you’ll probably want to avoid changing anything other than template-side contents.</p>
+
+  <h2>Filters (inappropriate.aiml, insults.aiml, profanity.aiml)</h2>
+
+  <p>These files act as filters when someone talking to the bot is attempting to say something “naughty.” Depending on what type of bot you are building, you may or may not want to include these files. They are quite comprehensive, so we included them in Rosie’s core.</p>
+
+  <p>Rosie’s UDC contains a randomized list of responses. Robust chatbots will often have hundreds of potential responses in this list. Rosie’s UDC has about 50 different responses; you may edit these and add to the list as you see fit.</p>
+
+  <h2>Reductions (reductions1.aiml, reductions2.aiml, reductions_update.aiml)</h2>
+
+  <p>Try asking Rosie about her job:</p>
+
+  <p>What is your job? I am a full-time chatbot.<br />
+Do you have a job? I am a full-time chatbot.</p>
+
+  <p>The reason these inputs are able to match our JOB category is because Rosie is chalk-full of useful reduction categories that simplify common inputs into succinct denominations. In other words, Rosie will automatically translate DO YOU HAVE A JOB and WHAT IS YOUR JOB to the much simpler JOB. By modifying the template of the single JOB category, we can effectively modify the answer given to a large number of inputs.</p>
+
+  <p>The bulk of Rosie (and ALICE) is made up of these reduction categories. For example, here are some categories from reductions1.aiml:</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;category&gt;&lt;pattern&gt;WHAT COUNTRY AM I *&lt;/pattern&gt;
+&lt;template&gt;&lt;srai&gt;MY COUNTRY &lt;/srai&gt;&lt;/template&gt;
+&lt;/category&gt;
+&lt;category&gt;&lt;pattern&gt;WHAT COUNTRY ARE WE *&lt;/pattern&gt;
+&lt;template&gt;&lt;srai&gt;MY COUNTRY &lt;/srai&gt;&lt;/template&gt;
+&lt;/category&gt;
+&lt;category&gt;&lt;pattern&gt;WHAT COUNTRY ARE WE IN&lt;/pattern&gt;
+&lt;template&gt;&lt;srai&gt;MY COUNTRY &lt;/srai&gt;&lt;/template&gt;
+&lt;/category&gt;
+&lt;category&gt;&lt;pattern&gt;WHAT COUNTRY IS THIS&lt;/pattern&gt;
+&lt;template&gt;&lt;srai&gt;MY COUNTRY &lt;/srai&gt;&lt;/template&gt;
+&lt;/category&gt;
+</code></pre></div>  </div>
+
+  <p>These categories reduce similar inputs to the simple pattern MY COUNTRY. You can modify the bot’s response to all four of these patterns by finding the MY COUNTRY category and changing the contents of its template.</p>
+
+  <p>Although the reductions files are at the heart of Rosie’s prowess with natural language understanding, you will most likely not have to edit anything in these files. However, it would be beneficial to skim through to get a feel for the types of reductions that are implemented in Rosie.</p>
+
+  <h2>Sets and Maps</h2>
+
+  <p>Finally, Rosie contains a large number of set and map files that were inherited from ALICE 2.0. Some of these are implemented in the AIML, others are not; but because they are such valuable resources for pattern matching and storing key-value pairs, they are included.</p>
+
+  <h2>Substitutions</h2>
+
+  <p>Rosie comes preloaded with all the same substitution files found when you create a new bot on the <a href="https://home.pandorabots.com">Pandorabots Platform</a>.</p>
+
+  <p>Start using Rosie now by downloading the <a href="https://github.com/pandorabots/rosie">github files</a> and uploading them to a bot on the <a href="https://home.pandorabots.com">Pandorabots Platform</a>.</p>
+
+</div>
+
+    </div>
+
+    <script type="text/javascript" src="/docs/assets/js/search-result-highlighter.js"></script>
+    <script>
+      $(document).ready(function() {
+        var sidebar = `<div markdown="1" class="pb-docs__navbar">
+  <form action="/docs/aiml-libraries/">
+  <div class="tipue_search_wrapper">
+    <div class="tipue_search_left">
+      <img src="/docs/assets/tipuesearch/search.png" class="tipue_search_icon"/>
+    </div>
+    <div class="tipue_search_right">
+      <input placeholder="Type to search" type="text" name="q" id="tipue_search_input" pattern=".{3,}" title="At least 3 characters" required/>
+    </div>
+  </div>
+  <div style="clear: both;"></div>
+  <div id="tipue_search_content"></div>
+  <div style="clear: both;"></div>
+</form>
+
+
+  
+  
+  <h2></h2>
+  <ul>
+    
+    
+  </ul>
+  
+  <h2>PLATFORM OVERVIEW</h2>
+  <ul>
+    
+    
+      <li class="pb-collapse" id="About Pandorabots-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/">About Pandorabots</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Feature Comparison-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/feature-comparison/">Feature Comparison</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="FAQ-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/faq/">FAQ</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/faq/#aiml">AIML</a></li>
+  <li><a href="/docs/faq/#api">API</a></li>
+  <li><a href="/docs/faq/#bots">Bots</a></li>
+  <li><a href="/docs/faq/#integrations">Integrations</a></li>
+  <li><a href="/docs/faq/#limits">Limits</a></li>
+  <li><a href="/docs/faq/#pricing">Pricing</a></li>
+  <li><a href="/docs/faq/#privacy">Privacy, Security &amp; Legal</a></li>
+  <li><a href="/docs/faq/#interface">User Interface</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+  </ul>
+  
+  <h2>AIML</h2>
+  <ul>
+    
+    
+      <li class="pb-collapse" id="AIML Fundamentals-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/aiml-fundamentals/">AIML Fundamentals</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="AIML: An Introduction-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/aiml-basics/">AIML: An Introduction</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="AIML Libraries-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/aiml-libraries/">AIML Libraries</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items pb-docs__navbar__collapse__items--active">
+            <ul>
+  <li><a href="/docs/aiml-libraries/#aiml-standard-library">AIML Standard Libraries</a></li>
+  <li><a href="/docs/aiml-libraries/#using-rosie">Modifying Small Talk files</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+      <li class="pb-collapse" id="AIML Reference-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/aiml-reference/">AIML Reference</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/aiml-reference/#aiml">aiml</a></li>
+  <li><a href="/docs/aiml-reference/#bot">bot</a></li>
+  <li><a href="/docs/aiml-reference/#button">button</a></li>
+  <li><a href="/docs/aiml-reference/#card">card</a></li>
+  <li><a href="/docs/aiml-reference/#carousel">carousel</a></li>
+  <li><a href="/docs/aiml-reference/#category">category</a></li>
+  <li><a href="/docs/aiml-reference/#condition">condition</a></li>
+  <li><a href="/docs/aiml-reference/#date">date</a></li>
+  <li><a href="/docs/aiml-reference/#delay">delay</a></li>
+  <li><a href="/docs/aiml-reference/#denormalize">denormalize</a></li>
+  <li><a href="/docs/aiml-reference/#eval">eval</a></li>
+  <li><a href="/docs/aiml-reference/#explode">explode</a></li>
+  <li><a href="/docs/aiml-reference/#first">first</a></li>
+  <li><a href="/docs/aiml-reference/#formal">formal</a></li>
+  <li><a href="/docs/aiml-reference/#gender">gender</a></li>
+  <li><a href="/docs/aiml-reference/#get">get</a></li>
+  <li><a href="/docs/aiml-reference/#id">id</a></li>
+  <li><a href="/docs/aiml-reference/#image">image</a></li>
+  <li><a href="/docs/aiml-reference/#input">input</a></li>
+  <li><a href="/docs/aiml-reference/#interval">interval</a></li>
+  <li><a href="/docs/aiml-reference/#learn">learn</a></li>
+  <li><a href="/docs/aiml-reference/#li">li</a></li>
+  <li><a href="/docs/aiml-reference/#link">link</a></li>
+  <li><a href="/docs/aiml-reference/#loop">loop</a></li>
+  <li><a href="/docs/aiml-reference/#lowercase">lowercase</a></li>
+  <li><a href="/docs/aiml-reference/#map">map</a></li>
+  <li><a href="/docs/aiml-reference/#normalize">normalize</a></li>
+  <li><a href="/docs/aiml-reference/#pattern">pattern</a></li>
+  <li><a href="/docs/aiml-reference/#person">person</a></li>
+  <li><a href="/docs/aiml-reference/#person2">person2</a></li>
+  <li><a href="/docs/aiml-reference/#program">program</a></li>
+  <li><a href="/docs/aiml-reference/#random">random</a></li>
+  <li><a href="/docs/aiml-reference/#reply">reply</a></li>
+  <li><a href="/docs/aiml-reference/#response">response</a></li>
+  <li><a href="/docs/aiml-reference/#rest">rest</a></li>
+  <li><a href="/docs/aiml-reference/#sentence">sentence</a></li>
+  <li><a href="/docs/aiml-reference/#set">set</a></li>
+  <li><a href="/docs/aiml-reference/#size">size</a></li>
+  <li><a href="/docs/aiml-reference/#split">split</a></li>
+  <li><a href="/docs/aiml-reference/#sr">sr</a></li>
+  <li><a href="/docs/aiml-reference/#srai">srai</a></li>
+  <li><a href="/docs/aiml-reference/#sraix">sraix</a></li>
+  <li><a href="/docs/aiml-reference/#star">star</a></li>
+  <li><a href="/docs/aiml-reference/#template">template</a></li>
+  <li><a href="/docs/aiml-reference/#that">that</a></li>
+  <li><a href="/docs/aiml-reference/#thatstar">thatstar</a></li>
+  <li><a href="/docs/aiml-reference/#think">think</a></li>
+  <li><a href="/docs/aiml-reference/#topic">topic</a></li>
+  <li><a href="/docs/aiml-reference/#topicstar">topicstar</a></li>
+  <li><a href="/docs/aiml-reference/#uppercase">uppercase</a></li>
+  <li><a href="/docs/aiml-reference/#video">video</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Core Concept Deep Dives-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/core-concepts/">Core Concept Deep Dives</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/core-concepts/#predicates">Predicates</a></li>
+  <li><a href="/docs/core-concepts/#substitutions">Substitutions &amp; Sentence Splitting</a></li>
+  <li><a href="/docs/core-concepts/#wildcards">Wildcards</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+  </ul>
+  
+  <h2>API REFERENCE</h2>
+  <ul>
+    
+    
+      <li class="pb-collapse" id="API Basics-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/api-basics/">API Basics</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="API Endpoints-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/api-endpoints/">API Endpoints</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/api-endpoints/#get-bot">List of bots</a></li>
+  <li><a href="/docs/api-endpoints/#put-bot">Create a bot</a></li>
+  <li><a href="/docs/api-endpoints/#delete-bot">Delete a bot</a></li>
+  <li><a href="/docs/api-endpoints/#get-files">List of bot files</a></li>
+  <li><a href="/docs/api-endpoints/#upload-file">Upload a bot file (AIML, set, substitution, map)</a></li>
+  <li><a href="/docs/api-endpoints/#upload-properties">Upload a bot file (pdefaults, properties)</a></li>
+  <li><a href="/docs/api-endpoints/#delete-file">Delete a bot file (AIML, set, map, substitution)</a></li>
+  <li><a href="/docs/api-endpoints/#delete-properties">Delete a bot file (pdefaults, properties)</a></li>
+  <li><a href="/docs/api-endpoints/#retrieve-file">Retrieve a bot file (AIML, set, map, substitution)</a></li>
+  <li><a href="/docs/api-endpoints/#retrieve-properties">Retrieve a bot file (pdefaults, properties)</a></li>
+  <li><a href="/docs/api-endpoints/#compile-bot">Compile a bot</a></li>
+  <li><a href="/docs/api-endpoints/#talk-to-bot-public">Talk to a bot</a></li>
+  <li><a href="/docs/api-endpoints/#atalk-to-bot-public">Anonymous talk</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Command Line Interface-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/command-line-interface/">Command Line Interface</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="SDKs-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/sdks/">SDKs</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Related Articles-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/related-articles/">Related Articles</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/related-articles/#manage-end-users">End-User Management with A-Talk API</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+  </ul>
+  
+  <h2>BUILDING BOTS</h2>
+  <ul>
+    
+    
+      <li class="pb-collapse" id="Hello World-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/building-bots/">Hello World</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Bot Building 101-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/building-bots/tutorial/">Bot Building 101</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/building-bots/tutorial/#core-concepts">Core Concepts</a></li>
+  <li><a href="/docs/building-bots/tutorial/#platform-components">Platform Components</a></li>
+</ul>
+<li>
+  <ul>
+    <li><a href="/docs/building-bots/tutorial/#basic-aiml-training">Basic AIML Training</a>
+      <ul>
+        <li><a href="/docs/building-bots/tutorial/#bat-categories">Categories</a></li>
+        <li><a href="/docs/building-bots/tutorial/#bat-wildcards">Wildcards</a></li>
+        <li><a href="/docs/building-bots/tutorial/#bat-variables">Variables</a></li>
+        <li><a href="/docs/building-bots/tutorial/#recursion-and-reduction">Recursion and Reduction</a></li>
+        <li><a href="/docs/building-bots/tutorial/#sets-and-maps">Sets and Maps</a></li>
+        <li><a href="/docs/building-bots/tutorial/#context">Context</a></li>
+        <li><a href="/docs/building-bots/tutorial/#learning">Learning</a></li>
+        <li><a href="/docs/building-bots/tutorial/#revisiting-key-platform-components">Revisiting Key Platform Components</a></li>
+      </ul>
+    </li>
+  </ul>
+</li>
+<ul>
+  <li><a href="/docs/building-bots/tutorial/#additional-aiml-features">Additional AIML Features</a></li>
+  <li><a href="/docs/building-bots/tutorial/#next-steps">Next Steps: Deploying Your Bot</a></li>
+  <li><a href="/docs/building-bots/tutorial/#updating-your-bot">Updating your Bot</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Specific Use Cases-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/building-bots/use-cases/">Specific Use Cases</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/building-bots/use-cases/#faq">FAQ Bot</a></li>
+  <li><a href="/docs/building-bots/use-cases/#concierge">Concierge Bot</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Quickstart-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/building-bots/quickstart/">Quickstart</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Small Talk-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/building-bots/small-talk/">Small Talk</a>
+        
+      </li>
+    
+  </ul>
+  
+  <h2>DEPLOY & EXTEND</h2>
+  <ul>
+    
+    
+      <li class="pb-collapse" id="Integrations-collapse">
+        
+          
+          
+          <a class="pb-docs__navbar__item pb-docs__navbar__collapse__toggle" href="/docs/integrations/">Integrations</a>
+          <ul markdown="1" class="pb-docs__navbar__collapse__items">
+            <ul>
+  <li><a href="/docs/integrations/#browser">Chat Widget</a></li>
+  <li><a href="/docs/integrations/#firebase">Firebase</a></li>
+  <li><a href="/docs/integrations/#mustache">Using Data Dynamically</a></li>
+  <li><a href="/docs/integrations/#slack">Slack</a></li>
+</ul>
+
+          </ul>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Social Messaging-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/social-messaging/">Social Messaging</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Landing Page-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/bot-landing-page/">Landing Page</a>
+        
+      </li>
+    
+      <li class="pb-collapse" id="Call API-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/callapi/">Call API</a>
+        
+      </li>
+    
+  </ul>
+  
+  <h2>FEATURES</h2>
+  <ul>
+    
+    
+      <li class="pb-collapse" id="Live Training-collapse">
+        
+          <a class="pb-docs__navbar__item" href="/docs/live-training/">Live Training</a>
+        
+      </li>
+    
+  </ul>
+  
+</div>`
+
+        const sidebarDiv = document.createElement('div')
+        sidebarDiv.innerHTML = sidebar
+
+        const container = document.querySelector('.pb-docs')
+        container.insertBefore(sidebarDiv, container.firstChild)
+
+        function _runSearch() {
+          $('#tipue_search_input').tipuesearch({
+            wholeWords: false
+          });
+          highlightSearchResult()
+        }
+
+        setTimeout(_runSearch, 200)
+      });
+    </script>
+  </body>
+</html>
